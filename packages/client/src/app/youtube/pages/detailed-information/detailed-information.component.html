@@ -1,0 +1,28 @@
+<div class="detailed-information">
+  <div *ngIf="loadingService.isLoading; then loaders else loaded"></div>
+
+  <ng-template #loaders>
+    <app-loaders></app-loaders>
+  </ng-template>
+
+  <ng-template #loaded>
+    <button mat-raised-button class="detailed-information__btn"
+    [isMain]="true" [appSetColorDatePlaceholder]="date"
+    (click)="router.navigate([''])">
+    <mat-icon class="detailed-information__icon">arrow_back_ios_new</mat-icon>
+    </button>
+    <img class="detailed-information__img" [isMain]="true" [appSetColorDatePlaceholder]="date" [src]="previewLink" alt="preview">
+    <div [isMain]="true" [appSetColorDatePlaceholder]="date" class="detailed-information-content">
+      <div class="detailed-information-content__title-date">
+        <h3 class="detailed-information-content__title">{{data?.title}}</h3>
+        <p class="detailed-information-content__date">{{date | date: 'fullDate'}}</p>
+      </div>
+      <p class="detailed-information-content__description-title">Description:</p>
+      <p class="detailed-information-content__description-text">{{data?.description}}</p>
+      <div class="detailed-information-content__statistics-container" *ngIf="!!data?.statistics">
+        <app-card-statistics class="detailed-information-content__statistics" [statistics]="data?.statistics"></app-card-statistics>
+      </div>
+      <div [isMain]="false" [appSetColorDatePlaceholder]="date" class="detailed-information__date-placeholder"></div>
+    </div>
+  </ng-template>
+</div>

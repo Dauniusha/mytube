@@ -1,0 +1,24 @@
+:host {
+  .header-btn {
+    box-sizing: border-box;
+    width: 4.5vh;
+    height: 4.5vh;
+    background-color: #2F80ED;
+    border-radius: 4.5vh * 0.15;
+    padding: 4.5vh * 0.18;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    transition: all 0.1s ease;
+    min-width: 0;
+    line-height: 0;
+  }
+
+  .active-btn {
+    box-shadow: 2px 2px 5px rgba(#2F80ED, 0.8);
+  }
+
+  .setting-img {
+    width: 100%;
+    height: 100%;
+  }
+}

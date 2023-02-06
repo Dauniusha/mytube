@@ -1,0 +1,30 @@
+:host {
+  .header-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e5e5e5;
+    height: 10vh;
+    position: relative;
+    z-index: 100;
+  }
+
+  .search-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .search-logo {
+  }
+
+  .active-btn {
+    box-shadow: 2px 2px 10px #2F80ED;
+  }
+
+  .header_open {
+    position: relative;
+    z-index: 10;
+    box-shadow: 0px 1px 10px #999;
+  }
+}

@@ -1,0 +1,25 @@
+.card {
+  padding-top: 0;
+  margin-top: 8%;
+
+  &__custom-placeholder {
+    position: relative;
+    margin-left: auto;
+    background: crimson;
+    font-size: 1vh;
+    height: 9%;
+    width: 15%;
+    color: #fff;
+    border-bottom-left-radius: 3vh;
+
+    &-icon {
+      position: absolute;
+      right: 39%;
+      transform: translateX(50%);
+      font-size: 3.5vh;
+      height: 3.5vh;
+      width: 3.5vh;
+      cursor: default;
+    }
+  }
+}

@@ -1,0 +1,14 @@
+.error {
+  &__img {
+    width: 10vw;
+    height: auto;
+    margin-right: 3vw;
+  }
+
+  &__text {
+    width: 30vw;
+    font-size: 5vh;
+    line-height: 5vh;
+    color: #4f4f4f;
+  }
+}

@@ -1,0 +1,49 @@
+:host {
+  .sorting-bar {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    height: 7vh;
+    font-size: 2vh;
+    align-items: center;
+    background: #e5e5e5;
+    box-shadow: 0px 1px 10px #999;
+  }
+
+  p {
+    margin: 0;
+    pointer-events: none;
+  }
+
+  .sorting-title {
+    color: #4f4f4f;
+  }
+
+  .sorting-categories {
+    color: #2F80ED;
+    margin-left: 1vw;
+  }
+
+  .sorting-by-word {
+    display: flex;
+    align-items: center;
+    margin-left: 1vw;
+
+    .sorting-categories {
+      margin-left: 0;
+    }
+  }
+
+  .sorting-by-word__input {
+    margin-left: 1vw;
+    color: #333;
+  }
+
+  .active {
+    text-decoration: underline;
+    cursor: pointer;
+
+    pointer-events: all;
+  }
+}

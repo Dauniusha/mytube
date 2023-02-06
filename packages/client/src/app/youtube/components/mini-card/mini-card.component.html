@@ -1,0 +1,9 @@
+<div class="card">
+  <div class="card__container">
+    <app-card-preview [previewLink]="previewLink"></app-card-preview>
+
+    <app-card-statistics [statistics]="data?.statistics"></app-card-statistics>
+
+    <app-title-button-date [data]="{ date, title: data?.title, id: data?.id }"></app-title-button-date>
+  </div>
+</div>

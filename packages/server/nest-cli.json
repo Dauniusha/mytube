@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/mytube-server/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/mytube-server/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/mytube-server",
+  "projects": {
+    "mytube-server": {
+      "type": "application",
+      "root": "apps/mytube-server",
+      "entryFile": "main",
+      "sourceRoot": "apps/mytube-server/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/mytube-server/tsconfig.app.json"
+      }
+    },
+    "microsevice": {
+      "type": "application",
+      "root": "apps/microsevice",
+      "entryFile": "main",
+      "sourceRoot": "apps/microsevice/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/microsevice/tsconfig.app.json"
+      }
+    }
+  }
+}

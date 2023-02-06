@@ -1,0 +1,12 @@
+<div [ngClass]="{ 'header_open' : !sortingBarService.isOpened }" class="header-main">
+  <div class="search-container">
+    <img class="search-logo" src="../../../assets/header/YT-logo.svg" alt="youtube logo">
+    <app-search-bar></app-search-bar>
+    <app-setting-btn></app-setting-btn>
+  </div>
+  <app-user-profile></app-user-profile>
+</div>
+<app-sorting-bar
+  *ngIf="sortingBarService.isOpened"
+  class="header_open"
+></app-sorting-bar>

@@ -1,0 +1,35 @@
+$mainColor: #333;
+$secondColor: #f2f2f2;
+$textSecondColor: #828282;
+$inputColor: #e0e0e0;
+$buttonColor: #2F80ED;
+
+.login {
+  margin: 5vh auto 0;
+  width: 21%;
+  padding: 3vh;
+  background: $secondColor;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
+  border-radius: 0.7vh;
+  display: flex;
+  flex-direction: column;
+  text-shadow: 2px 2px 4px rgb(0 0 0 / 30%);
+
+  &__title {
+    font-size: 4vh;
+    color: $mainColor;
+    margin-bottom: 2vh;
+  }
+
+  &__btn {
+    margin-top: 3vh;
+    margin-right: 0;
+    margin-left: auto;
+    box-sizing: border-box;
+    padding: 0 7vh;
+    color: #fff;
+    font-weight: 400;
+    background: $buttonColor;
+    align-self: flex-end;
+  }
+}

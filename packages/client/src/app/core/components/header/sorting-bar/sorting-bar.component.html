@@ -1,0 +1,19 @@
+<div matSort class="sorting-bar" (matSortChange)="sortingService.setSort($event)">
+  <p class="sorting-title">Sorting by:</p>
+  <p mat-sort-header="date" start="desc" class="sorting-categories active">date</p>
+  <p mat-sort-header="viewCount" start="desc" class="sorting-categories active">count of views</p>
+  <div class="sorting-by-word">
+
+    <p
+      class="sorting-categories"
+      [ngClass]="{ active: queryString.length }"
+      >by word or sentance</p>
+
+    <input
+      class="sorting-by-word__input"
+      type="text"
+      placeholder="Enter word or sentance" 
+      (input)="wordSearching($event)"
+      >
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="card">
+  <div class="card__custom-placeholder" title="custom">
+    <mat-icon class="card__custom-placeholder-icon">edit_note</mat-icon>
+  </div>
+
+  <div class="card__container">
+    <app-card-preview [previewLink]="data?.inputData?.imgLink"></app-card-preview>
+
+    <app-title-button-date [data]="{ date, title: data?.inputData?.title, id }"></app-title-button-date>
+  </div>
+</div>

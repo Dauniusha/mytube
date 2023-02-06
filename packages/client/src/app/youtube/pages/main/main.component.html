@@ -1,0 +1,25 @@
+<div
+  class="cards__container"
+  [ngClass]="{
+    'sorting-bar_opened': sortingBarService.isOpened,
+    'sorting-bar_closed' : !sortingBarService.isOpened
+  }"
+>
+  <div *ngIf="loadingService.isLoading; then loaders else loaded"></div>
+
+  <ng-template #loaders>
+    <app-loaders></app-loaders>
+  </ng-template>
+
+  <ng-template #loaded>
+    <app-custom-mini-card
+      *ngFor="let card of customCards | async"
+      [cardData]="card"
+    ></app-custom-mini-card>
+    
+    <app-mini-card
+      *ngFor="let card of cards | async | sorting: sortData?.active : sortData?.direction | filterByWord: sortingByWordQuery"
+      [cardData]="card"
+    ></app-mini-card>
+  </ng-template>
+</div>

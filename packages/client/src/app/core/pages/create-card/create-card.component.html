@@ -1,0 +1,10 @@
+<div class="centered-element">
+  <form class="login" (submit)="createCard($event)">
+    <h2 class="login__title">Create new card</h2>
+    <app-input (valueChange)="changeData($event)" name="Title" type="text"></app-input>
+    <app-input (valueChange)="changeData($event)" name="Description" type='text'></app-input>
+    <app-input (valueChange)="changeData($event)" name="Img" type='text'></app-input>
+    <app-input (valueChange)="changeData($event)" name="Link to video" type='text'></app-input>
+    <button type="submit" mat-raised-button class="login__btn">Create card</button>
+  </form>
+</div>

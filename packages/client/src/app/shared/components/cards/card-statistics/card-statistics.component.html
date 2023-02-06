@@ -1,0 +1,18 @@
+<div class="statistics">
+  <div class="statistics__each">
+    <mat-icon class="statistics__icon">visibility</mat-icon>
+    <span class="statistics__text">{{statistics?.viewCount | statisticsFilter}}</span>
+  </div>
+  <div class="statistics__each">
+    <mat-icon class="statistics__icon">favorite</mat-icon>
+    <span class="statistics__text">{{statistics?.likeCount | statisticsFilter}}</span>
+  </div>
+  <div class="statistics__each">
+    <mat-icon class="statistics__icon">favorite_border</mat-icon>
+    <span class="statistics__text">{{statistics?.dislikeCount | statisticsFilter}}</span>
+  </div>
+  <div class="statistics__each">
+    <mat-icon class="statistics__icon">question_answer</mat-icon>
+    <span class="statistics__text">{{statistics?.commentCount | statisticsFilter}}</span>
+  </div>
+</div>

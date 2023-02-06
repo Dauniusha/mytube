@@ -1,0 +1,21 @@
+.cards__container {
+  box-sizing: border-box;
+  margin: 0 auto;
+  width: 99.7%;
+  padding: 2% 9% 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 1vh;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 1vh;
+    background-color: #aaa;
+  }
+}

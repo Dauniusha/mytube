@@ -1,0 +1,9 @@
+<form class="search-form">
+  <input
+    class="search-input"
+    type="text"
+    placeholder="What do you want to find out?"
+    name="search"
+    (input)="filterSubject.next($event)"
+  >
+</form>

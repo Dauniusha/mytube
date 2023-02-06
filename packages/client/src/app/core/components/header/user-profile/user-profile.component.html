@@ -1,0 +1,17 @@
+<p class="header-name">Your name</p>
+<div *ngIf="isLogin | async; then logout else login"></div>
+
+<ng-template #login>
+  <button mat-raised-button class="header-btn" title="login" (click)="loginService.goToLogin()">
+    <mat-icon class="header-icon">person_outline</mat-icon>
+  </button>
+</ng-template>
+
+<ng-template #logout>
+  <button mat-raised-button class="header-btn" title="create new card" (click)="router.navigate(['create'])">
+    <mat-icon class="header-icon">add</mat-icon>
+  </button>
+  <button mat-raised-button class="header-btn" title="logout" id="logout" (click)="loginService.logout()">
+    <mat-icon class="header-icon">logout</mat-icon>
+  </button>
+</ng-template>
