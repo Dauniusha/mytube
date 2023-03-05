@@ -1,0 +1,1 @@
+export const USERS_MICROCERVICE = Symbol.for('USERS_MICROCERVICE');

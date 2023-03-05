@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+  output  = "./generated"
+}
+
+datasource Users {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  email       String        @id() @Users.VarChar(255)
+  password    String        @Users.VarChar(60)
+  refreshToken String?      @Users.VarChar @map("refresh_token")
+  createdAt   DateTime      @default(now()) @map("created_at")
+  lastSignIn  DateTime      @default(now()) @map("last_sign_in")
+  updatedAt   DateTime      @default(now()) @map("updated_at")
+
+  UserProfile UserProfile[]
+
+  @@map("users")
+}
+
+model UserProfile {
+  email     String @id() @Users.VarChar(255)
+  firstName String @map("first_name") @Users.VarChar(60)
+  lastName  String @map("last_name") @Users.VarChar(60)
+  username  String @Users.VarChar(60)
+  avatar    String @Users.VarChar(255)
+
+  user User @relation(fields: [email], references: [email], onDelete: Cascade)
+
+  @@index([username])
+  @@map("user_profiles")
+}

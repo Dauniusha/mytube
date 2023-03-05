@@ -71,3 +71,14 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+## Custom
+zookeeper-server-start.bat ..\..\config\zookeeper.properties
+
+kafka-server-start.bat ..\..\config\server.properties
+
+kafka-topics.bat --create --topic my-topic --bootstrap-server localhost:9092 --replication-factor 1 --partitions 3
+
+kafka-console-producer.bat --broker-list localhost:9092 --topic my-topic
+
+kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic my-topic --from-beginning

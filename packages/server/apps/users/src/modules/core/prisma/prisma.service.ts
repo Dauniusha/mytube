@@ -1,0 +1,22 @@
+import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { PrismaClient } from '../../../prisma/generated';
+
+@Injectable()
+export class PrismaService {
+    private readonly prismaClient: PrismaClient;
+
+    constructor(private readonly configService: ConfigService) {
+        this.prismaClient = new PrismaClient({
+            datasources: { Users: { url: this.configService.getOrThrow<string>('USERS_DB_URL') } },
+        });
+
+        this.createTransaction = this.prismaClient.$transaction.bind(this.prismaClient);
+    }
+
+    createTransaction: typeof this.prismaClient.$transaction;
+
+    get client(): PrismaClient {
+        return this.prismaClient;
+    }
+}
