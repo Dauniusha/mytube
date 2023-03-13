@@ -5,7 +5,7 @@ import { setting } from 'src/app/settings/setting';
 import { map, switchMap, tap } from 'rxjs/operators';
 
 import { ICardData } from 'src/app/youtube/models/card-data-interface';
-import { IAppState } from 'src/app/redux/state.models';
+import { AppState } from 'src/app/redux/state.models';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { cardsActionsMap } from 'src/app/redux/actions/cards.actions';
@@ -28,7 +28,7 @@ export class HttpService {
     private httpClient: HttpClient,
     private loadingService: LoadingService,
     private router: Router,
-    private store: Store<IAppState>,
+    private store: Store<AppState>,
   ) { }
 
   public getCards(queryString: string) {

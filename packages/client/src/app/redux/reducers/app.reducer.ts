@@ -1,7 +1,9 @@
 import { ActionReducerMap } from '@ngrx/store';
-import { IAppState } from '../state.models';
+import { AppState } from '../state.models';
 import { cardsReducer } from './models/cards.reducer';
+import { userReducer } from './models/user.reduced';
 
-export const appReducers: ActionReducerMap<IAppState, any> = {
+export const appReducers: ActionReducerMap<AppState, any> = {
   cards: cardsReducer,
+  user: userReducer,
 };

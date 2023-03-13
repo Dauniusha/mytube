@@ -3,11 +3,12 @@ $textSecondColor: #828282;
 $inputColor: #e0e0e0;
 
 .input {
-  margin-bottom: 0.2vh;
+  margin-bottom: 0.8vh;
 
   &__text {
     margin: 0;
     margin-left: 1vh;
+    margin-bottom: 0.4vh;
     font-size: 1.5vh;
     color: $textSecondColor;
   }

@@ -3,6 +3,7 @@ $secondColor: #f2f2f2;
 $textSecondColor: #828282;
 $inputColor: #e0e0e0;
 $buttonColor: #2F80ED;
+$linkColor: #518edd;
 
 :host {
   display: flex;
@@ -21,23 +22,38 @@ $buttonColor: #2F80ED;
   border-radius: 0.7vh;
   display: flex;
   flex-direction: column;
-  text-shadow: 2px 2px 4px rgb(0 0 0 / 30%);
 
   &__title {
     font-size: 4vh;
     color: $mainColor;
     margin-bottom: 2vh;
+    text-shadow: 2px 2px 4px rgb(0 0 0 / 30%);
   }
+}
 
-  &__btn {
-    margin-top: 3vh;
+.btns-container {
+  margin-top: 3vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__login {
+    font-size: 2vh;
     margin-right: 0;
     margin-left: auto;
     box-sizing: border-box;
-    padding: 0 7vh;
+    padding: 0.3vh 4vh;
+    letter-spacing: 0.8px;
     color: #fff;
     font-weight: 400;
     background: $buttonColor;
     align-self: flex-end;
+  }
+
+  &__redirect {
+    font-size: 1.9vh;
+    outline: none;
+    text-decoration: none;
+    color: $linkColor;
   }
 }

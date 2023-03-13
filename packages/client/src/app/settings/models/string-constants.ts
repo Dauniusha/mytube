@@ -11,7 +11,9 @@ export const stringConstants = {
     yellowRGB: '242, 201, 76',
   },
   storeNames: {
-    token: 'token',
+    token: 'access_token',
+    refreshToken: 'refresh_token',
+    expiresIn: 'expires_in',
   },
   apiKey: 'AIzaSyDrUmTHjMK03mOZIebOHycAd7OJmYuRrho',
   searchPart: 'snippet',

@@ -20,7 +20,7 @@
         "airbnb-typescript/base"
       ],
       "rules": {
-        "no-console": "off",
+        "no-console": "warn",
         "@angular-eslint/no-output-on-prefix": "warn",
         "class-methods-use-this": "off",
         "no-param-reassign": "off",

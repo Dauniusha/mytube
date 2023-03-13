@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { SignUpGQL } from '../../../graphql/types.generated';
+import { Router } from '@angular/router';
+import { RegistrationService } from '../../services/registration.service';
 
 @Component({
   selector: 'app-registration',
@@ -8,10 +9,20 @@ import { SignUpGQL } from '../../../graphql/types.generated';
   styleUrls: ['./registration.component.scss']
 })
 export class RegistrationComponent implements OnInit {
-  email = new FormControl('', [Validators.required, Validators.email]);
-  password = new FormControl('', [Validators.required, Validators.minLength(3)]);
+  email = new FormControl('', {
+    nonNullable: true,
+    validators: [Validators.required, Validators.email],
+  });
 
-  constructor(private readonly signUpGql: SignUpGQL) { }
+  password = new FormControl('', {
+    nonNullable: true,
+    validators: [Validators.required, Validators.minLength(3)],
+  });
+
+  constructor(
+    private readonly registrationService: RegistrationService,
+    private readonly router: Router,
+  ) { }
 
   ngOnInit(): void {}
 
@@ -26,8 +37,13 @@ export class RegistrationComponent implements OnInit {
   }
 
   signUp(event: Event) {
-    this.signUpGql
-      .mutate({ signUpData: { email: this.email.value, password: this.password.value } })
-      .subscribe();
+    event.preventDefault();
+
+    this.registrationService
+      .signUp({
+        email: this.email.value,
+        password: this.password.value,
+      })
+      .subscribe(() => this.router.navigate(['']));
   }
 }

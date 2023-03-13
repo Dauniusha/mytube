@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IInputEmit } from 'src/app/shared/models/input-emit-interface';
 import { ICustomCardData } from 'src/app/core/models/custom-card/custom-card-data';
-import { IAppState } from 'src/app/redux/state.models';
+import { AppState } from 'src/app/redux/state.models';
 import { Store } from '@ngrx/store';
 import { cardsActionsMap } from 'src/app/redux/actions/cards.actions';
 import { Router } from '@angular/router';
@@ -28,7 +28,7 @@ export class CreateCardComponent implements OnInit {
   };
 
   constructor(
-    private store: Store<IAppState>,
+    private store: Store<AppState>,
     private router: Router,
   ) { }
 

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { AuthService } from 'src/app/authentication/services/auth.service';
+import { AuthenticationService } from '../../../../authentication/services/authentication.service';
+import { selectorUser } from '../../../../redux/selectors/user.selectors';
+import { AppState } from '../../../../redux/state.models';
 
 @Component({
   selector: 'app-user-profile',
@@ -9,14 +12,22 @@ import { AuthService } from 'src/app/authentication/services/auth.service';
   styleUrls: ['./user-profile.component.scss'],
 })
 export class UserProfileComponent implements OnInit {
-  private name: string = '';
-
-  public isLogin: Observable<boolean> = this.authService.loginState$;
+  public isLoggedIn: Observable<boolean> = this.store.select(selectorUser.loginState);
 
   constructor(
-    public authService: AuthService,
-    public router: Router,
+    public readonly router: Router,
+    private readonly store: Store<AppState>,
+    public readonly authService: AuthenticationService,
   ) { }
+
+  goToLogin() {
+    this.router.navigate(['identity/sign-in']);
+  }
+
+  signOut() {
+    this.authService.signOut()
+      .subscribe(() => this.router.navigate(['']));
+  }
 
   public ngOnInit(): void {
   }

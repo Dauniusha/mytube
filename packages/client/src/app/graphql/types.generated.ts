@@ -72,6 +72,26 @@ export type SignOut = {
   data?: Maybe<Scalars['Void']>;
 };
 
+export type RefreshMutationVariables = Exact<{
+  refreshToken: Scalars['String'];
+}>;
+
+
+export type RefreshMutation = { __typename?: 'Mutation', refresh: { __typename?: 'AuthResult', accessToken: string, refreshToken: string } };
+
+export type SignInMutationVariables = Exact<{
+  email: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+
+export type SignInMutation = { __typename?: 'Mutation', signIn: { __typename?: 'AuthResult', accessToken: string, refreshToken: string } };
+
+export type SignOutMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SignOutMutation = { __typename?: 'Mutation', signOut?: { __typename?: 'SignOut', data?: any | null } | null };
+
 export type SignUpMutationVariables = Exact<{
   signUpData: CreateUserInput;
 }>;
@@ -79,6 +99,62 @@ export type SignUpMutationVariables = Exact<{
 
 export type SignUpMutation = { __typename?: 'Mutation', signUp: { __typename?: 'AuthResult', accessToken: string, refreshToken: string } };
 
+export const RefreshDocument = gql`
+    mutation refresh($refreshToken: String!) {
+  refresh(refreshToken: $refreshToken) {
+    accessToken
+    refreshToken
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class RefreshGQL extends Apollo.Mutation<RefreshMutation, RefreshMutationVariables> {
+    override document = RefreshDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const SignInDocument = gql`
+    mutation signIn($email: String!, $password: String!) {
+  signIn(email: $email, password: $password) {
+    accessToken
+    refreshToken
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class SignInGQL extends Apollo.Mutation<SignInMutation, SignInMutationVariables> {
+    override document = SignInDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const SignOutDocument = gql`
+    mutation signOut {
+  signOut {
+    data
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class SignOutGQL extends Apollo.Mutation<SignOutMutation, SignOutMutationVariables> {
+    override document = SignOutDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const SignUpDocument = gql`
     mutation signUp($signUpData: CreateUserInput!) {
   signUp(signUpData: $signUpData) {

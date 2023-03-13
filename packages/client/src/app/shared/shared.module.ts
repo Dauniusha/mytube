@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { StatisticsFilterPipe } from '../youtube/pipes/statistics-filter.pipe';
 import { CardStatisticsComponent } from './components/cards/card-statistics/card-statistics.component';
 import { SetColorDatePlaceholderDirective } from './directives/set-color-date-placeholder.directive';

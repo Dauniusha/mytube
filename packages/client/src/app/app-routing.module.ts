@@ -21,11 +21,7 @@ const routes: Routes = [
     canActivate: [AuthenticationGuard],
   },
   {
-    path: 'login',
-    loadChildren: () => import('./authentication/authentication.module').then((m) => m.AuthenticationModule),
-  },
-  {
-    path: 'sign-up',
+    path: 'identity',
     loadChildren: () => import('./authentication/authentication.module').then((m) => m.AuthenticationModule),
   },
   { path: '**', component: ErrorComponent },

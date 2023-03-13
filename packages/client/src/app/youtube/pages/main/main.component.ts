@@ -7,7 +7,7 @@ import { LoadingService } from 'src/app/core/services/loader/loading.service';
 import { SortingBarService } from 'src/app/core/services/sorting/sorting-bar.service';
 import { SortingService } from 'src/app/core/services/sorting/sorting.service';
 import { selectorCards } from 'src/app/redux/selectors/cards.selectors';
-import { IAppState } from 'src/app/redux/state.models';
+import { AppState } from 'src/app/redux/state.models';
 import { ICardData } from '../../models/card-data-interface';
 
 @Component({
@@ -27,7 +27,7 @@ export class MainComponent implements OnInit {
   constructor(
     public loadingService: LoadingService,
     private sortingService: SortingService,
-    private store: Store<IAppState>,
+    private store: Store<AppState>,
     public sortingBarService: SortingBarService,
   ) { }
 

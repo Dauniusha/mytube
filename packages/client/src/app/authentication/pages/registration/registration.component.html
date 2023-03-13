@@ -1,13 +1,21 @@
 <div class="centered-element">
   <form class="registration" (submit)="signUp($event)">
-    <h2 class="login__title">Sign-Up</h2>
-    <mat-form-field>
+    <h2 class="registration__title">Sign-Up</h2>
+    <mat-form-field class="registration__input">
       <mat-label>Email</mat-label>
       <input type="email" matInput [formControl]="email" required/>
       <mat-icon matSuffix>email</mat-icon>
       <mat-error *ngIf="email.invalid">{{ getEmailErrorMessage() }}</mat-error>
     </mat-form-field>
-    <app-input name="password" type='password'></app-input>
-    <button type="submit" mat-raised-button class="login__btn">Sign-Up</button>
+    <mat-form-field class="registration__field">
+      <mat-label>Password</mat-label>
+      <input type="password" matInput [formControl]="password" required />
+      <mat-icon matSuffix>lock</mat-icon>
+      <mat-error *ngIf="password.invalid">{{ getPasswordErrorMessage() }}</mat-error>
+    </mat-form-field>
+    <div class="btns-container">
+      <a class="btns-container__redirect" routerLink="../sign-in">Sign In</a>
+      <button type="submit" mat-raised-button class="btns-container__registration">Sign-Up</button>
+    </div>
   </form>
 </div>

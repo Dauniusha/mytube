@@ -7,8 +7,12 @@ import { onError } from '@apollo/client/link/error';
 import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { environment } from 'src/environments/environment';
+import { AuthenticationService } from '../authentication/services/authentication.service';
+import { AuthMiddleware } from './middlewares/auth.middleware';
+import { ExceptionsFilter } from './middlewares/exceptions.filter';
 
 const errorLink = onError(({ graphQLErrors, networkError, response }) => {
+	console.log(graphQLErrors)
 	if (graphQLErrors && graphQLErrors.length > 0) {
 		if (
 			(graphQLErrors[0] as any)?.statusCode >= 400 && 
@@ -24,29 +28,33 @@ const errorLink = onError(({ graphQLErrors, networkError, response }) => {
 	}
 });
 
-const basicContext = setContext((_, { headers }) => {
+const basicContext = setContext((_, context) => {
 	return {
 		headers: {
-			...headers,
 			Accept: 'charset=utf-8',
-			authorization: `Bearer random token`,
 			'Content-Type': 'application/json',
 		},
 	};
 });
 
-export function createDefaultApollo(httpLink: HttpLink): ApolloClientOptions<any> {
+export function createDefaultApollo(
+  httpLink: HttpLink,
+  authService: AuthenticationService,
+): ApolloClientOptions<any> {
 	const cache = new InMemoryCache();
 
 	const http = httpLink.create({
 		uri: 'http://localhost:3000/graphql',
 	});
 
+  const authMiddleware = new AuthMiddleware(authService);
+  const exceptionsFilter = new ExceptionsFilter(authService);
+
 	return {
 		connectToDevTools: !environment.production,
 		assumeImmutableResults: true,
 		cache,
-		link: ApolloLink.from([basicContext, errorLink, http]),
+		link: ApolloLink.from([basicContext, authMiddleware, exceptionsFilter, http]),
 		defaultOptions: {
 			watchQuery: {
 				errorPolicy: 'all',
@@ -61,7 +69,7 @@ export function createDefaultApollo(httpLink: HttpLink): ApolloClientOptions<any
 		{
 			provide: APOLLO_OPTIONS,
 			useFactory: createDefaultApollo,
-			deps: [HttpLink],
+			deps: [HttpLink, AuthenticationService],
 		},
 	],
 })

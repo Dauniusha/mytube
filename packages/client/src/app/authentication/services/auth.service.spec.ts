@@ -1,10 +1,10 @@
 import { TestBed } from "@angular/core/testing";
 import { Router } from "@angular/router";
 import { setting } from "src/app/settings/setting";
-import { AuthService } from "./auth.service";
+import { AuthenticationService } from "./authentication.service";
 
 describe('Auth service', () => {
-  let authService: AuthService;
+  let authService: AuthenticationService;
 
   const router: jasmine.SpyObj<Router> = jasmine.createSpyObj('Router', ['navigate']);
 
@@ -14,12 +14,7 @@ describe('Auth service', () => {
         { provide: Router, useValue: router }
       ]
     });
-    authService = new AuthService(router);
-  });
-
-  it('Should navigate to the Login page', () => {
-    authService.goToLogin();
-    expect(router.navigate).toHaveBeenCalledWith(['login']);
+    authService = new AuthenticationService(router);
   });
 
   it('Should navigate to the Home page', () => {
@@ -37,7 +32,7 @@ describe('Auth service', () => {
   });
 
   it('Should logout', () => {
-    authService.login(new Event('submit'));
+    authService.signIn(new Event('submit'));
     authService.logout();
 
     const deletedToken = localStorage.getItem(setting.stringConstants.storeNames.token);

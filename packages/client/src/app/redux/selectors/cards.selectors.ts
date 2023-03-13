@@ -1,16 +1,16 @@
 import { createSelector } from '@ngrx/store';
-import { IAppState, ICardsState } from '../state.models';
+import { AppState, CardsState } from '../state.models';
 
-const selectCards = (state: IAppState) => state.cards;
+const selectCards = (state: AppState) => state.cards;
 
 const selectYoutubeCards = createSelector(
   selectCards,
-  (state: ICardsState) => state.youtubeCards,
+  (state: CardsState) => state.youtubeCards,
 );
 
 const selectCustomCards = createSelector(
   selectCards,
-  (state: ICardsState) => state.customCards,
+  (state: CardsState) => state.customCards,
 );
 
 export const selectorCards = {
