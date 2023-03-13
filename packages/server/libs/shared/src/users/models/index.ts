@@ -1,6 +1,8 @@
-export * from './dto/refresh-tokens.dto';
-export * from './dto/create-user.dto';
-export * from './dto/auth-result.dto';
-export * from './dto/sign-in.dto';
+export * from './dto/refresh-tokens.args';
+export * from './dto/create-user.input';
+export * from './dto/sign-in.args';
 
+export * from './sign-out.model';
+export * from './auth-user.model';
+export * from './auth-result.model';
 export * from './token-payload.model';

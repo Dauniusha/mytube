@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { LoginService } from 'src/app/authentication/services/login.service';
+import { AuthService } from 'src/app/authentication/services/auth.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -11,10 +11,10 @@ import { LoginService } from 'src/app/authentication/services/login.service';
 export class UserProfileComponent implements OnInit {
   private name: string = '';
 
-  public isLogin: Observable<boolean> = this.loginService.loginState$;
+  public isLogin: Observable<boolean> = this.authService.loginState$;
 
   constructor(
-    public loginService: LoginService,
+    public authService: AuthService,
     public router: Router,
   ) { }
 

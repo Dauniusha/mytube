@@ -3,7 +3,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { KafkaRequestSerializer } from '@nestjs/microservices/serializers';
 import { USERS_MICROCERVICE } from '../../../constants';
-import { AuthController } from './auth.controller';
+import { AuthResolver } from './auth.resolver';
 
 @Module({
     imports: [
@@ -36,7 +36,7 @@ import { AuthController } from './auth.controller';
             },
         ]),
     ],
-    providers: [],
-    controllers: [AuthController],
+    providers: [AuthResolver],
+    controllers: [],
 })
 export class AuthModule {}

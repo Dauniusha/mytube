@@ -3,8 +3,8 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import {
-    CreateUserDto, SignInDto, AuthResultDto,
-    RefreshTokensDto, TokenPayload,
+    CreateUserInput, SignInArgs, RefreshTokensArgs,
+    AuthResult, TokenPayload, AuthUser,
 } from '@mytube/shared/users/models';
 import { UsersRepository } from './repositories/users.repository';
 import { PrismaService } from '../core/prisma/prisma.service';
@@ -39,7 +39,7 @@ export class AuthService {
         return user;
     }
 
-    private async createTokens(email: string): Promise<AuthResultDto> {
+    private async createTokens(email: string): Promise<AuthResult> {
         const tokenPayload: TokenPayload = { email };
 
         const [accessToken, refreshToken] = await Promise.all([
@@ -54,10 +54,10 @@ export class AuthService {
             }),
         ]);
 
-        return new AuthResultDto(accessToken, refreshToken);
+        return new AuthResult(accessToken, refreshToken);
     }
 
-    async register(userRequest: CreateUserDto): Promise<AuthResultDto> {
+    async register(userRequest: CreateUserInput): Promise<AuthResult> {
         const user = await this.usersRepository.getUser(userRequest.email);
 
         if (user) {
@@ -80,7 +80,7 @@ export class AuthService {
         return tokens;
     }
 
-    async login(request: SignInDto): Promise<AuthResultDto> {
+    async login(request: SignInArgs): Promise<AuthResult> {
         const { email, password: plainPassword } = request;
         const user = await this.validateUser(email, plainPassword);
 
@@ -94,7 +94,7 @@ export class AuthService {
         return tokens;
     }
 
-    async refresh(request: RefreshTokensDto): Promise<AuthResultDto> {
+    async refresh(request: RefreshTokensArgs): Promise<AuthResult> {
         const { email } = await this.jwtService.verifyAsync<TokenPayload>(request.refreshToken);
 
         const user = await this.usersRepository.getUser(email);
@@ -115,5 +115,20 @@ export class AuthService {
 
     async signOut(request: TokenPayload) {
         await this.usersRepository.resetRefreshToken(request.email);
+    }
+
+    async getAuthUser(request: TokenPayload): Promise<AuthUser> {
+        const {
+            email,
+            createdAt,
+            updatedAt,
+            lastSignIn,
+        } = await this.usersRepository.getUser(request.email) || {};
+
+        if (!email) {
+            throw new Error(`User ${request.email} not found.`);
+        }
+
+        return new AuthUser(email, createdAt, updatedAt, lastSignIn);
     }
 }

@@ -12,6 +12,10 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { YoutubeInterceptor } from './core/services/http/http-interceptor';
 import { appReducers } from './redux/reducers/app.reducer';
+import { Apollo, ApolloModule } from 'apollo-angular';
+import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { GraphQLModule } from './graphql/graphql.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +33,7 @@ import { appReducers } from './redux/reducers/app.reducer';
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
     CoreModule,
+    GraphQLModule,
   ],
   providers: [
     {
@@ -39,4 +44,4 @@ import { appReducers } from './redux/reducers/app.reducer';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

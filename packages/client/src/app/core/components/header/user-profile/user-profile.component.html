@@ -2,7 +2,7 @@
 <div *ngIf="isLogin | async; then logout else login"></div>
 
 <ng-template #login>
-  <button mat-raised-button class="header-btn" title="login" (click)="loginService.goToLogin()">
+  <button mat-raised-button class="header-btn" title="login" (click)="authService.goToLogin()">
     <mat-icon class="header-icon">person_outline</mat-icon>
   </button>
 </ng-template>
@@ -11,7 +11,7 @@
   <button mat-raised-button class="header-btn" title="create new card" (click)="router.navigate(['create'])">
     <mat-icon class="header-icon">add</mat-icon>
   </button>
-  <button mat-raised-button class="header-btn" title="logout" id="logout" (click)="loginService.logout()">
+  <button mat-raised-button class="header-btn" title="logout" id="logout" (click)="authService.logout()">
     <mat-icon class="header-icon">logout</mat-icon>
   </button>
 </ng-template>

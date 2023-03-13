@@ -1,27 +1,36 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import {
-    CreateUserDto, SignInDto, RefreshTokensDto, AuthResultDto, TokenPayload,
+    CreateUserInput, SignInArgs, RefreshTokensArgs,
+    AuthResult, TokenPayload, AuthUser,
 } from '@mytube/shared/users/models';
-import { SIGN_IN_TOPIC, SIGN_UP_TOPIC, REFRESH_TOKENS_TOPIC, SIGN_OUT_TOPIC } from '@mytube/shared/users/constants';
+import {
+    SIGN_IN_TOPIC, SIGN_UP_TOPIC, REFRESH_TOKENS_TOPIC,
+    SIGN_OUT_TOPIC, GET_AUTH_USER_TOPIC,
+} from '@mytube/shared/users/constants';
 import { AuthService } from './auth.service';
 
 @Controller()
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
+    @MessagePattern(GET_AUTH_USER_TOPIC)
+    getAuthUser(@Payload() message: TokenPayload): Promise<AuthUser> {
+        return this.authService.getAuthUser(message);
+    }
+
     @MessagePattern(SIGN_UP_TOPIC)
-    async signUp(@Payload() message: CreateUserDto): Promise<AuthResultDto> {
+    signUp(@Payload() message: CreateUserInput): Promise<AuthResult> {
         return this.authService.register(message);
     }
 
     @MessagePattern(SIGN_IN_TOPIC)
-    signIn(@Payload() message: SignInDto): Promise<AuthResultDto> {
+    signIn(@Payload() message: SignInArgs): Promise<AuthResult> {
         return this.authService.login(message);
     }
 
     @MessagePattern(REFRESH_TOKENS_TOPIC)
-    refresh(@Payload() message: RefreshTokensDto): Promise<AuthResultDto> {
+    refresh(@Payload() message: RefreshTokensArgs): Promise<AuthResult> {
         return this.authService.refresh(message);
     }
 

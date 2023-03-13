@@ -1,0 +1,16 @@
+overwrite: true
+generates:
+  src/app/graphql/types.generated.ts: 
+    plugins:
+    - typescript
+    - typescript-operations
+    - typescript-apollo-angular
+schema:
+  # where the server lives
+  - http://localhost:3000/graphql 
+documents:
+  # where are our queries / mutations, etc.
+  - src/**/*.graphql
+config:
+  # used to disable lint rule: ts(4114) (override)
+  addExplicitOverride: true

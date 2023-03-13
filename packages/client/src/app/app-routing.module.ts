@@ -24,6 +24,10 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./authentication/authentication.module').then((m) => m.AuthenticationModule),
   },
+  {
+    path: 'sign-up',
+    loadChildren: () => import('./authentication/authentication.module').then((m) => m.AuthenticationModule),
+  },
   { path: '**', component: ErrorComponent },
 ];
 

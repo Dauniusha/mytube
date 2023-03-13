@@ -1,0 +1,13 @@
+<div class="centered-element">
+  <form class="registration" (submit)="signUp($event)">
+    <h2 class="login__title">Sign-Up</h2>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input type="email" matInput [formControl]="email" required/>
+      <mat-icon matSuffix>email</mat-icon>
+      <mat-error *ngIf="email.invalid">{{ getEmailErrorMessage() }}</mat-error>
+    </mat-form-field>
+    <app-input name="password" type='password'></app-input>
+    <button type="submit" mat-raised-button class="login__btn">Sign-Up</button>
+  </form>
+</div>

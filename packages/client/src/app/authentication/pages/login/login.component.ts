@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginService } from '../../services/login.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,10 +9,10 @@ import { LoginService } from '../../services/login.service';
 })
 export class LoginComponent implements OnInit {
   constructor(
-    public loginService: LoginService,
+    public authService: AuthService,
     private router: Router,
   ) {
-    this.loginService.loginState$.subscribe((isLogged: boolean) => {
+    this.authService.loginState$.subscribe((isLogged: boolean) => {
       if (isLogged) {
         this.router.navigate(['']);
       }
