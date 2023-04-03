@@ -5,7 +5,7 @@ generator client {
 
 datasource Users {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("USERS_DB_URL")
 }
 
 model User {
@@ -15,6 +15,7 @@ model User {
   createdAt   DateTime      @default(now()) @map("created_at")
   lastSignIn  DateTime      @default(now()) @map("last_sign_in")
   updatedAt   DateTime      @default(now()) @map("updated_at")
+  onboardingStep Int @default(1) @map("onboarding_step")
 
   UserProfile UserProfile[]
 
@@ -23,10 +24,10 @@ model User {
 
 model UserProfile {
   email     String @id() @Users.VarChar(255)
-  firstName String @map("first_name") @Users.VarChar(60)
-  lastName  String @map("last_name") @Users.VarChar(60)
-  username  String @Users.VarChar(60)
-  avatar    String @Users.VarChar(255)
+  firstName String @map("first_name") @Users.VarChar(20)
+  lastName  String @map("last_name") @Users.VarChar(20)
+  username  String @Users.VarChar(20)
+  avatar    String? @Users.VarChar(255)
 
   user User @relation(fields: [email], references: [email], onDelete: Cascade)
 

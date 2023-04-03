@@ -12,6 +12,7 @@ import { CoreModule } from './core/core.module';
 import { appReducers } from './redux/reducers/app.reducer';
 import { GraphQLModule } from './graphql/graphql.module';
 import { JwtHelperService, JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { MatSelectCountryModule } from '@angular-material-extensions/select-country';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { JwtHelperService, JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
     }),
     CoreModule,
     GraphQLModule,
+    MatSelectCountryModule.forRoot('en'),
   ],
   providers: [
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },

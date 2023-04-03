@@ -23,6 +23,18 @@
       ],
       "@mytube/shared/*": [
         "libs/shared/src/*"
+      ],
+      "@mytube/infrastructure": [
+        "libs/infrastructure/src"
+      ],
+      "@mytube/infrastructure/*": [
+        "libs/infrastructure/src/*"
+      ],
+      "@mytube/core": [
+        "libs/core/src"
+      ],
+      "@mytube/core/*": [
+        "libs/core/src/*"
       ]
     }
   }

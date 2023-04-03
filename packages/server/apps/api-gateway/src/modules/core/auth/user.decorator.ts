@@ -1,5 +1,5 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { TokenPayload } from '@mytube/shared/users/models';
+import { TokenPayload } from '@mytube/shared/users/models/auth';
 import { UserRequest } from './models/user-request.model';
 import { GqlExecutionContext } from '@nestjs/graphql';
 

@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { CoreModule } from './modules/core/core.module';
-import { AuthModule } from './modules/users/auth/auth.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { Void } from '@mytube/shared/core/scalars/void.scalar';
 import { DateScalar } from '@mytube/shared/core/scalars/date.scalar';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
     imports: [
@@ -23,8 +23,8 @@ import { DateScalar } from '@mytube/shared/core/scalars/date.scalar';
                 dateScalarMode: 'timestamp',
             },
         }),
-        AuthModule,
         CoreModule,
+        UsersModule,
     ],
     providers: [DateScalar],
     controllers: [],

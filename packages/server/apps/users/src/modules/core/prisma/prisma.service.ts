@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { IPrismaService } from '@mytube/core';
 import { PrismaClient } from '../../../prisma/generated';
 
 @Injectable()
-export class PrismaService {
+export class PrismaService implements IPrismaService {
     private readonly prismaClient: PrismaClient;
 
     constructor(private readonly configService: ConfigService) {

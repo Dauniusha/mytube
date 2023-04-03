@@ -1,0 +1,39 @@
+<div class="centered-element">
+  <form class="onboarding-form" (submit)="createProfile($event)">
+    <h2 class="title">Profile</h2>
+    <p class="description">Please set up your profile</p>
+    <div mat-card-avatar class="onboarding-avatar">
+      <input type="file" accept="image/*" (change)="uploadAvatar($event)"/>
+      <div *ngIf="avatarUrlSubject | async; then image else placeholder"></div>
+      <ng-template #image>
+        <img src={{avatar}} alt="avatar" class="onboarding-avatar__avatar">
+      </ng-template>
+      
+      <ng-template #placeholder>
+        <mat-icon matSuffix class="onboarding-avatar__placeholder">perm_identity</mat-icon>
+      </ng-template>
+    </div>
+    <mat-form-field class="onboarding-form__field">
+      <mat-label>First Name</mat-label>
+      <input matInput [formControl]="firstName" required/>
+      <mat-error *ngIf="firstName.invalid">Should be set of less than 20 letters</mat-error>
+    </mat-form-field>
+    <mat-form-field class="onboarding-form__field">
+      <mat-label>Last Name</mat-label>
+      <input matInput [formControl]="lastName" required/>
+      <mat-error *ngIf="lastName.invalid">Should be set of less than 20 letters</mat-error>
+    </mat-form-field>
+    <mat-form-field class="onboarding-form__field">
+      <mat-label>Username</mat-label>
+      <input matInput [formControl]="username" required/>
+      <mat-error *ngIf="username.invalid">Should be set of less than 20 letters and digits</mat-error>
+    </mat-form-field>
+    <mat-select-country
+      class="onboarding-form__field"
+      label="Country"
+      [formControl]="country"
+      appearance="fill">
+    </mat-select-country>
+    <button type="submit" mat-raised-button class="submit-btn" color="primary">Next</button>
+  </form>
+</div>

@@ -1,4 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+$mainColor: #333;
+$secondColor: #f2f2f2;
+$textSecondColor: #828282;
+$inputColor: #e0e0e0;
+$buttonColor: #2F80ED;
+$linkColor: #518edd;
 
 html, body { height: 100%; }
 body {

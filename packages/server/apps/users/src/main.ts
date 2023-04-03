@@ -1,7 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { SerializationInterceptor } from '@mytube/infrastructure';
+import { LoggingInterceptor } from '@mytube/core';
 import { AppModule } from './app.module';
-import { LoggingInterceptor, SerializationInterceptor } from './modules/core/interceptors';
 
 async function bootstrap() {
     const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {

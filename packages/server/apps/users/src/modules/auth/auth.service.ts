@@ -4,8 +4,8 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import {
     CreateUserInput, SignInArgs, RefreshTokensArgs,
-    AuthResult, TokenPayload, AuthUser,
-} from '@mytube/shared/users/models';
+    AuthResult, TokenPayload, AuthUser, Tokens,
+} from '@mytube/shared/users/models/auth';
 import { UsersRepository } from './repositories/users.repository';
 import { PrismaService } from '../core/prisma/prisma.service';
 import { User } from '../../prisma/generated';
@@ -39,7 +39,7 @@ export class AuthService {
         return user;
     }
 
-    private async createTokens(email: string): Promise<AuthResult> {
+    private async createTokens(email: string): Promise<Tokens> {
         const tokenPayload: TokenPayload = { email };
 
         const [accessToken, refreshToken] = await Promise.all([
@@ -54,7 +54,7 @@ export class AuthService {
             }),
         ]);
 
-        return new AuthResult(accessToken, refreshToken);
+        return { accessToken, refreshToken };
     }
 
     async register(userRequest: CreateUserInput): Promise<AuthResult> {
@@ -64,7 +64,7 @@ export class AuthService {
             throw new Error('User with this email already exist.');
         }
 
-        const [ hash, tokens ] = await Promise.all([
+        const [ hash, { accessToken, refreshToken } ] = await Promise.all([
             this.hashPassword(userRequest.password),
             this.createTokens(userRequest.email.toUpperCase()),
         ]);
@@ -72,30 +72,32 @@ export class AuthService {
         await this.transactionService.createTransaction((dbClient) => {
             return this.usersRepository.createUser({
                 ...userRequest,
-                refreshToken: tokens.refreshToken,
+                refreshToken,
                 password: hash,
             }, dbClient);
         });
 
-        return tokens;
+        return new AuthResult(accessToken, refreshToken, user.onboardingStep);
     }
 
     async login(request: SignInArgs): Promise<AuthResult> {
         const { email, password: plainPassword } = request;
         const user = await this.validateUser(email, plainPassword);
 
-        const tokens = await this.createTokens(user.email);
+        const { accessToken, refreshToken } = await this.createTokens(user.email);
 
         await this.usersRepository.updateUser({
             email: user.email,
-            refreshToken: tokens.refreshToken,
+            refreshToken,
         });
 
-        return tokens;
+        return new AuthResult(accessToken, refreshToken, user.onboardingStep);
     }
 
     async refresh(request: RefreshTokensArgs): Promise<AuthResult> {
-        const { email } = await this.jwtService.verifyAsync<TokenPayload>(request.refreshToken);
+        const { email } = await this.jwtService.verifyAsync<TokenPayload>(request.refreshToken, {
+            secret: this.configService.getOrThrow<string>('JWT_REFRESH_SECRET'),
+        });
 
         const user = await this.usersRepository.getUser(email);
 
@@ -103,14 +105,14 @@ export class AuthService {
             throw new Error('Refresh token expired.');
         }
 
-        const tokens = await this.createTokens(email);
+        const { accessToken, refreshToken } = await this.createTokens(email);
 
         await this.usersRepository.updateUser({
             email: user.email,
-            refreshToken: tokens.refreshToken,
+            refreshToken,
         });
 
-        return tokens;
+        return new AuthResult(accessToken, refreshToken, user.onboardingStep);
     }
 
     async signOut(request: TokenPayload) {
@@ -123,12 +125,13 @@ export class AuthService {
             createdAt,
             updatedAt,
             lastSignIn,
+            onboardingStep,
         } = await this.usersRepository.getUser(request.email) || {};
 
         if (!email) {
             throw new Error(`User ${request.email} not found.`);
         }
 
-        return new AuthUser(email, createdAt, updatedAt, lastSignIn);
+        return new AuthUser(email, createdAt, updatedAt, lastSignIn, onboardingStep);
     }
 }

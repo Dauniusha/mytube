@@ -1,4 +1,5 @@
 import 'source-map-support/register';
+import * as bodyParser from 'body-parser';
 import { BadRequestException, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
@@ -11,6 +12,9 @@ async function bootstrap() {
             ],
         },
     });
+
+    app.use(bodyParser.json({ limit: '5mb' }));
+    app.use(bodyParser.urlencoded({ limit: '5mb', extended: true }));
 
     app.useGlobalPipes(
         new ValidationPipe({

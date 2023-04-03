@@ -1,6 +1,7 @@
 mutation refresh($refreshToken: String!) {
     refresh(refreshToken: $refreshToken) {
-        accessToken,
-        refreshToken,
+        accessToken
+        refreshToken
+        onboardingStep
     }
 }

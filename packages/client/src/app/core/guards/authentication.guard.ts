@@ -23,7 +23,8 @@ export class AuthenticationGuard implements CanActivate {
     return this.authService.refresh()
       .pipe(
         map(() => true),
-        catchError(() => {
+        catchError((err) => {
+          console.log(err);
           this.router.navigate(['identity/sign-in']);
           return of(false);
         }),

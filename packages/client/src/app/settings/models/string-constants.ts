@@ -14,6 +14,7 @@ export const stringConstants = {
     token: 'access_token',
     refreshToken: 'refresh_token',
     expiresIn: 'expires_in',
+    onboardingStep: 'onboarding_step',
   },
   apiKey: 'AIzaSyDrUmTHjMK03mOZIebOHycAd7OJmYuRrho',
   searchPart: 'snippet',

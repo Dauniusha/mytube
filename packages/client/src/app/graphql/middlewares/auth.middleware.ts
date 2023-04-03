@@ -7,8 +7,9 @@ export class AuthMiddleware extends ApolloLink {
     super((operation, forward) => {
       const context = operation.getContext();
 
-      const authRequired = context.map.get(IS_NEED_AUTHORISATION);
+      const authRequired = context.map?.get(IS_NEED_AUTHORISATION) ?? true;
 
+      console.log(context);
       if (!authRequired) {
         return forward(operation);
       }
@@ -19,8 +20,8 @@ export class AuthMiddleware extends ApolloLink {
   }
 
   private setAuthHeader(req: DefaultContext): DefaultContext {
-    return req.clone({
-      headers: req.headers.set('authorization', `Bearer ${this.authService.getAccessToken()}`),
-    });
+    console.log(req)
+    req.headers.authorization = `Bearer ${this.authService.getAccessToken()}`;
+    return req;
   }
 }

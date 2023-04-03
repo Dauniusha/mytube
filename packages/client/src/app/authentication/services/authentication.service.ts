@@ -28,10 +28,11 @@ export class AuthenticationService {
   }
 
   clientSignIn(authResult: AuthResult) {
-    const { accessToken, refreshToken } = authResult;
+    const { accessToken, refreshToken, onboardingStep } = authResult;
 
     localStorage.setItem(setting.stringConstants.storeNames.token, accessToken);
     localStorage.setItem(setting.stringConstants.storeNames.refreshToken, refreshToken);
+    localStorage.setItem(setting.stringConstants.storeNames.onboardingStep, onboardingStep.toString());
 
     this.store.dispatch(userActionsMap.authenticate({ isAuthenticated: true }));
   }
@@ -39,6 +40,7 @@ export class AuthenticationService {
   clientSignOut() {
     localStorage.removeItem(setting.stringConstants.storeNames.token);
     localStorage.removeItem(setting.stringConstants.storeNames.refreshToken);
+    localStorage.removeItem(setting.stringConstants.storeNames.onboardingStep);
 
     this.store.dispatch(userActionsMap.authenticate({ isAuthenticated: false }));
   }
@@ -58,7 +60,7 @@ export class AuthenticationService {
 
     if (!refreshToken) {
       this.clientSignOut();
-      return throwError(new Error('Refresh token not found.'));
+      return throwError(() => new Error('Refresh token not found.'));
     }
 
     return this.authApi.refresh(refreshToken)
@@ -79,5 +81,10 @@ export class AuthenticationService {
     }
 
     return !this.jwtHelperService.isTokenExpired(token);
+  }
+
+  nextOnboardingStep() {
+    const nextStep = Number(setting.stringConstants.storeNames.onboardingStep) + 1;
+    localStorage.setItem(setting.stringConstants.storeNames.onboardingStep, nextStep.toString());
   }
 }

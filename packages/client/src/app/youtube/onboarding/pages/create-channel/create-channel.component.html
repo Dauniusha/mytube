@@ -1,0 +1,26 @@
+<div class="centered-element">
+  <form class="onboarding-form" (submit)="createChannel($event)">
+    <h2 class="title">Channel</h2>
+    <p class="description">Please set up your channel</p>
+    <mat-form-field class="onboarding-form__field">
+      <mat-label>Name</mat-label>
+      <input matInput [formControl]="name" required/>
+      <mat-icon matSuffix class="input-icon">title</mat-icon>
+      <mat-error *ngIf="name.hasError('required')">Name is required</mat-error>
+      <mat-error *ngIf="name.hasError('minLength')">Must be more then 5 letters</mat-error>
+    </mat-form-field>
+    <mat-form-field class="onboarding-form__field">
+      <mat-label>Alias</mat-label>
+      <input matInput [formControl]="alias" required/>
+      <mat-icon matSuffix class="input-icon">format_quote</mat-icon>
+      <mat-error *ngIf="alias.hasError('required')">Channel aliases is required</mat-error>
+      <mat-error *ngIf="alias.hasError('pattern')">Must be 4-20 length with letters or digits</mat-error>
+    </mat-form-field>
+    <mat-form-field class="onboarding-form__field">
+      <mat-label>Description</mat-label>
+      <textarea matInput cdkTextareaAutosize [formControl]="description" maxlength="200"></textarea>
+      <mat-icon matSuffix class="input-icon">description</mat-icon>
+    </mat-form-field>
+    <button type="submit" mat-raised-button class="submit-btn" color="primary">Next</button>
+  </form>
+</div>

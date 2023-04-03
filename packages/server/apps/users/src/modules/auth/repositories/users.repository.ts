@@ -9,7 +9,7 @@ export class UsersRepository {
     ) {}
 
     createUser(
-        user: Omit<User, 'createdAt' | 'updatedAt' | 'lastSignIn'>,
+        user: Omit<User, 'createdAt' | 'updatedAt' | 'lastSignIn' | 'onboardingStep'>,
         dbClient?: Prisma.TransactionClient,
     ) {
         const client = dbClient || this.prismaService.client;
@@ -61,6 +61,23 @@ export class UsersRepository {
             },
             data: {
                 refreshToken: null,
+            },
+        });
+    }
+
+    async incrementOnboardingStep(
+        user: Pick<User, 'email' | 'onboardingStep'>,
+        dbClient?: Prisma.TransactionClient,
+    ) {
+        const client = dbClient || this.prismaService.client;
+
+        await client.user.update({
+            where: {
+                email: user.email.toUpperCase(),
+            },
+            data: {
+                onboardingStep: user.onboardingStep + 1,
+                updatedAt: new Date(),
             },
         });
     }

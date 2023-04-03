@@ -5,12 +5,12 @@ import { ClientKafka } from '@nestjs/microservices';
 import {
     CreateUserInput, SignInArgs, RefreshTokensArgs,
     TokenPayload, AuthResult, AuthUser, SignOut,
-} from '@mytube/shared/users/models';
+} from '@mytube/shared/users/models/auth';
 import {
     SIGN_IN_TOPIC, SIGN_UP_TOPIC, REFRESH_TOKENS_TOPIC,
     SIGN_OUT_TOPIC, GET_AUTH_USER_TOPIC,
-} from '@mytube/shared/users/constants';
-import { USERS_MICROCERVICE } from '../../../constants';
+} from '@mytube/shared/users/constants/auth';
+import { USERS_MICROCERVICE } from '@mytube/infrastructure';
 import { JwtAuthGuard, Public, User } from '../../core/auth';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 

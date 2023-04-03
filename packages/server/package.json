@@ -92,7 +92,9 @@
       "<rootDir>/libs/"
     ],
     "moduleNameMapper": {
-      "^mytube/shared(|/.*)$": "<rootDir>/libs/shared/src/$1"
+      "^mytube/shared(|/.*)$": "<rootDir>/libs/shared/src/$1",
+      "^@mytube/infrastructure(|/.*)$": "<rootDir>/libs/infrastructure/src/$1",
+      "^mytube/core(|/.*)$": "<rootDir>/libs/core/src/$1"
     }
   }
 }
