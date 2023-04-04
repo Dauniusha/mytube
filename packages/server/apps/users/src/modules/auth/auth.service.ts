@@ -134,4 +134,9 @@ export class AuthService {
 
         return new AuthUser(email, createdAt, updatedAt, lastSignIn, onboardingStep);
     }
+
+    async increaseOnboardingStep(request: TokenPayload) {
+        const user = await this.usersRepository.getUser(request.email);
+        return this.usersRepository.incrementOnboardingStep(user);
+    }
 }

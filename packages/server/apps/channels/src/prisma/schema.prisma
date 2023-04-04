@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated"
+}
+
+datasource Channels {
+  provider = "postgresql"
+  url      = env("CHANNELS_DB_URL")
+}
+
+model User {
+  userId  String   @id() @map("user_id")
+  Channel Channel?
+
+  @@map("users")
+}
+
+model Channel {
+  id                   String         @id() @default(uuid()) @Channels.Uuid
+  name                 String         @unique() @Channels.VarChar(40)
+  ownerId              String         @unique() @map("owner") @Channels.VarChar(255)
+  description          String?        @Channels.VarChar(300)
+  avatar               String?        @Channels.VarChar(255)
+  createdAt            DateTime       @default(now()) @map("created_at")
+  channelSubscriptions Subscription[]
+  owner                User           @relation(fields: [ownerId], references: [userId], onDelete: Cascade)
+
+  @@index([name])
+  @@index([ownerId])
+  @@map("channels")
+}
+
+model Subscription {
+  channelId            String   @map("channel_id") @Channels.Uuid
+  subscriberId         String   @map("subscriber_id") @Channels.VarChar(255)
+  notificationsEnabled Boolean  @default(false) @map("notifications_enabled")
+  createdAt            DateTime @default(now()) @map("created_at")
+
+  subscriptionChannel Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+
+  @@id([channelId, subscriberId])
+  @@map("subscriptions")
+}

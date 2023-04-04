@@ -10,7 +10,6 @@ import { UsersRepository } from '../auth/repositories/users.repository';
 @Injectable()
 export class ProfilesService {
     constructor(
-        private readonly configService: ConfigService,
         private readonly transactionService: PrismaService,
         private readonly userProfilesRepository: UserProfilesRepository,
         private readonly usersRepository: UsersRepository,

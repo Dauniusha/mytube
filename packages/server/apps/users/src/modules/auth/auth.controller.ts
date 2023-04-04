@@ -1,12 +1,12 @@
 import { Controller } from '@nestjs/common';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import { EventPattern, MessagePattern, Payload } from '@nestjs/microservices';
 import {
     CreateUserInput, SignInArgs, RefreshTokensArgs,
     AuthResult, TokenPayload, AuthUser,
 } from '@mytube/shared/users/models/auth';
 import {
     SIGN_IN_TOPIC, SIGN_UP_TOPIC, REFRESH_TOKENS_TOPIC,
-    SIGN_OUT_TOPIC, GET_AUTH_USER_TOPIC,
+    SIGN_OUT_TOPIC, GET_AUTH_USER_TOPIC, INCREASE_ONBOARDING_STEP_TOPIC,
 } from '@mytube/shared/users/constants/auth';
 import { AuthService } from './auth.service';
 
@@ -37,5 +37,10 @@ export class AuthController {
     @MessagePattern(SIGN_OUT_TOPIC)
     async signOut(@Payload() message: TokenPayload) {
         await this.authService.signOut(message);
+    }
+
+    @EventPattern(INCREASE_ONBOARDING_STEP_TOPIC)
+    async increaseOnboardingStep(@Payload() message: TokenPayload) {
+        await this.authService.increaseOnboardingStep(message);
     }
 }
