@@ -25,7 +25,7 @@ export class CreateProfileComponent {
 
   username = new FormControl('', {
     nonNullable: true,
-    validators: [Validators.required, Validators.pattern(/[A-z]{3,20}/)],
+    validators: [Validators.required, Validators.pattern(/^[A-z]{3,20}$/)],
   });
 
   country = new FormControl<Country>({

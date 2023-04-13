@@ -1,0 +1,11 @@
+query getChannel($alias: String!) {
+    getChannel(alias: $alias) {
+        id
+        owner
+        name
+        alias
+        description
+        avatar
+        createdAt
+    }
+}

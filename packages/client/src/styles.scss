@@ -70,3 +70,8 @@ $height: $width * 1.24;
     object-fit: cover;
   }
 }
+
+.disabled-btn {
+  pointer-events: none;
+  opacity: 0.5;
+}

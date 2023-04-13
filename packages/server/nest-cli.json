@@ -4,15 +4,7 @@
   "sourceRoot": "apps",
   "compilerOptions": {
     "deleteOutDir": true,
-    "webpack": false,
-    "assets": [
-      {
-        "include": "**/.env"
-      },
-      {
-        "include": "**/prisma/generated/**"
-      }
-    ]
+    "webpack": false
   },
   "monorepo": true,
   "root": "apps",
@@ -32,6 +24,44 @@
           {
             "include": "prisma/generated/**",
             "outDir": "dist/users/apps/users/src"
+          }
+        ]
+      }
+    },
+    "channels": {
+      "type": "application",
+      "root": "apps/channels",
+      "entryFile": "main",
+      "sourceRoot": "apps/channels/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/channels/tsconfig.app.json",
+        "deleteOutDir": true,
+        "assets": [
+          {
+            "include": ".env"
+          },
+          {
+            "include": "prisma/generated/**",
+            "outDir": "dist/channels/apps/channels/src"
+          }
+        ]
+      }
+    },
+    "videos": {
+      "type": "application",
+      "root": "apps/videos",
+      "entryFile": "main",
+      "sourceRoot": "apps/videos/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/videos/tsconfig.app.json",
+        "deleteOutDir": true,
+        "assets": [
+          {
+            "include": ".env"
+          },
+          {
+            "include": "prisma/generated/**",
+            "outDir": "dist/videos/apps/videos/src"
           }
         ]
       }
@@ -61,15 +91,6 @@
       "sourceRoot": "libs/infrastructure/src",
       "compilerOptions": {
         "tsConfigPath": "libs/infrastructure/tsconfig.lib.json"
-      }
-    },
-    "channels": {
-      "type": "application",
-      "root": "apps/channels",
-      "entryFile": "main",
-      "sourceRoot": "apps/channels/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/channels/tsconfig.app.json"
       }
     },
     "core": {

@@ -1,0 +1,5 @@
+mutation editChannel($editChannelData: EditChannelInput!) {
+    editChannel(editChannelData: $editChannelData) {
+        id
+    }
+}

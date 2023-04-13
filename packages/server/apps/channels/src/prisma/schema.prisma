@@ -9,8 +9,9 @@ datasource Channels {
 }
 
 model User {
-  userId  String   @id() @map("user_id")
-  Channel Channel?
+  userId       String         @id() @map("user_id")
+  Channel      Channel?
+  Subscription Subscription[]
 
   @@map("users")
 }
@@ -18,13 +19,15 @@ model User {
 model Channel {
   id                   String         @id() @default(uuid()) @Channels.Uuid
   name                 String         @unique() @Channels.VarChar(40)
+  alias                String         @unique() @Channels.VarChar(12)
   ownerId              String         @unique() @map("owner") @Channels.VarChar(255)
   description          String?        @Channels.VarChar(300)
-  avatar               String?        @Channels.VarChar(255)
+  avatar               String?        @Channels.Text
   createdAt            DateTime       @default(now()) @map("created_at")
   channelSubscriptions Subscription[]
   owner                User           @relation(fields: [ownerId], references: [userId], onDelete: Cascade)
 
+  @@index([alias])
   @@index([name])
   @@index([ownerId])
   @@map("channels")
@@ -36,6 +39,7 @@ model Subscription {
   notificationsEnabled Boolean  @default(false) @map("notifications_enabled")
   createdAt            DateTime @default(now()) @map("created_at")
 
+  subscriber          User    @relation(fields: [subscriberId], references: [userId], onDelete: Cascade)
   subscriptionChannel Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
 
   @@id([channelId, subscriberId])

@@ -3,9 +3,16 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { UsersRepository } from './repositories/users.repository';
+import { ClientsModule } from '@nestjs/microservices';
+import { channelsClientOptions } from '@mytube/infrastructure';
 
 @Module({
-    imports: [JwtModule],
+    imports: [
+        JwtModule,
+        ClientsModule.register([
+            channelsClientOptions('users'),
+        ]),
+    ],
     providers: [AuthService, UsersRepository],
     controllers: [AuthController],
 })

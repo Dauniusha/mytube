@@ -6,7 +6,7 @@
       <input type="file" accept="image/*" (change)="uploadAvatar($event)"/>
       <div *ngIf="avatarUrlSubject | async; then image else placeholder"></div>
       <ng-template #image>
-        <img src={{avatar}} alt="avatar" class="onboarding-avatar__avatar">
+        <img src={{avatarUrlSubject}} alt="avatar" class="onboarding-avatar__avatar">
       </ng-template>
       
       <ng-template #placeholder>

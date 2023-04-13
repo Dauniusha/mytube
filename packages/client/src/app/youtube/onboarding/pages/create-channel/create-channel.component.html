@@ -2,6 +2,17 @@
   <form class="onboarding-form" (submit)="createChannel($event)">
     <h2 class="title">Channel</h2>
     <p class="description">Please set up your channel</p>
+    <div mat-card-avatar class="onboarding-avatar">
+      <input type="file" accept="image/*" (change)="uploadAvatar($event)"/>
+      <div *ngIf="avatarUrlSubject | async; then image else placeholder"></div>
+      <ng-template #image>
+        <img src={{avatar}} alt="avatar" class="onboarding-avatar__avatar">
+      </ng-template>
+      
+      <ng-template #placeholder>
+        <mat-icon matSuffix class="onboarding-avatar__placeholder">perm_identity</mat-icon>
+      </ng-template>
+    </div>
     <mat-form-field class="onboarding-form__field">
       <mat-label>Name</mat-label>
       <input matInput [formControl]="name" required/>
@@ -14,7 +25,7 @@
       <input matInput [formControl]="alias" required/>
       <mat-icon matSuffix class="input-icon">format_quote</mat-icon>
       <mat-error *ngIf="alias.hasError('required')">Channel aliases is required</mat-error>
-      <mat-error *ngIf="alias.hasError('pattern')">Must be 4-20 length with letters or digits</mat-error>
+      <mat-error *ngIf="alias.hasError('pattern')">Must be 4-12 length with letters or digits and -</mat-error>
     </mat-form-field>
     <mat-form-field class="onboarding-form__field">
       <mat-label>Description</mat-label>

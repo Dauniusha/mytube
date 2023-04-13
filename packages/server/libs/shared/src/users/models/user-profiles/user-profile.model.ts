@@ -14,7 +14,7 @@ export class UserProfile {
     @Field()
     username: string;
 
-    @Field()
+    @Field({ nullable: true })
     avatar?: string;
 
     constructor(

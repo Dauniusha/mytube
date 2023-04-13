@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
@@ -9,10 +9,15 @@ import {
 import { UsersRepository } from './repositories/users.repository';
 import { PrismaService } from '../core/prisma/prisma.service';
 import { User } from '../../prisma/generated';
+import { CHANNELS_MICROCERVICE } from '@mytube/infrastructure';
+import { ClientKafka } from '@nestjs/microservices';
+import { CREATE_CHANNELS_USER_TOPIC } from '@mytube/shared/channels/constants/users';
+import { CreateChannelUserDto } from '@mytube/shared/channels/models/users';
 
 @Injectable()
 export class AuthService {
     constructor(
+        @Inject(CHANNELS_MICROCERVICE) private readonly channelsClient: ClientKafka,
         private readonly configService: ConfigService,
         private readonly transactionService: PrismaService,
         private readonly usersRepository: UsersRepository,
@@ -58,9 +63,9 @@ export class AuthService {
     }
 
     async register(userRequest: CreateUserInput): Promise<AuthResult> {
-        const user = await this.usersRepository.getUser(userRequest.email);
+        const existingUser = await this.usersRepository.getUser(userRequest.email);
 
-        if (user) {
+        if (existingUser) {
             throw new Error('User with this email already exist.');
         }
 
@@ -69,12 +74,18 @@ export class AuthService {
             this.createTokens(userRequest.email.toUpperCase()),
         ]);
 
-        await this.transactionService.createTransaction((dbClient) => {
-            return this.usersRepository.createUser({
+        const user = await this.transactionService.createTransaction(async (dbClient) => {
+            const user = await this.usersRepository.createUser({
                 ...userRequest,
                 refreshToken,
                 password: hash,
             }, dbClient);
+                
+            this.channelsClient.emit(CREATE_CHANNELS_USER_TOPIC, {
+                message: new CreateChannelUserDto(user.email),
+            });
+
+            return user;
         });
 
         return new AuthResult(accessToken, refreshToken, user.onboardingStep);

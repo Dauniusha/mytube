@@ -3,7 +3,6 @@ import { Injectable } from '@nestjs/common';
 import { User } from '../../../prisma/generated';
 import { PrismaService } from '../../core/prisma/prisma.service';
 
-@Global()
 @Injectable()
 export class UsersRepository {
     constructor(

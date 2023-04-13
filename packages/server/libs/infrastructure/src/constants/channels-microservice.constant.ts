@@ -1,0 +1,1 @@
+export const CHANNELS_MICROCERVICE = Symbol.for('CHANNELS_MICROCERVICE');

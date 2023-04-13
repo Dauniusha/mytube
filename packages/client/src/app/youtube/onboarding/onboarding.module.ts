@@ -10,10 +10,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { CreateProfileComponent } from './pages/create-profile/create-profile.component';
 import { MatSelectCountryModule } from '@angular-material-extensions/select-country';
 import { CreateProfileApi } from './api/create-profile.api';
+import { CreateChannelApi } from './api/create-channel.api';
 
 @NgModule({
   providers: [
     CreateProfileApi,
+    CreateChannelApi,
   ],
   declarations: [
     CreateChannelComponent,

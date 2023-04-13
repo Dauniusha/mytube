@@ -7,6 +7,7 @@ import { join } from 'path';
 import { Void } from '@mytube/shared/core/scalars/void.scalar';
 import { DateScalar } from '@mytube/shared/core/scalars/date.scalar';
 import { UsersModule } from './modules/users/users.module';
+import { ChannelsModule } from './modules/channels/channels.module';
 
 @Module({
     imports: [
@@ -25,6 +26,7 @@ import { UsersModule } from './modules/users/users.module';
         }),
         CoreModule,
         UsersModule,
+        ChannelsModule,
     ],
     providers: [DateScalar],
     controllers: [],

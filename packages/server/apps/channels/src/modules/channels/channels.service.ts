@@ -28,6 +28,7 @@ export class ChannelsService {
             id,
             ownerId,
             name,
+            alias,
             createdAt,
             description,
             avatar,
@@ -45,20 +46,21 @@ export class ChannelsService {
             ]);
         });
 
-        return new Channel(id, ownerId, name, createdAt, description, avatar);
+        return new Channel(id, ownerId, name, alias, createdAt, description, avatar);
     }
 
-    async getChannel(channelId: string): Promise<Channel> {
+    async getChannel(channelAlias: string): Promise<Channel> {
         const {
             id,
             ownerId,
             name,
+            alias,
             createdAt,
             description,
             avatar,
-        } = await this.channelsRepository.getChannelById(channelId);
+        } = await this.channelsRepository.getChannelByAlias(channelAlias);
 
-        return new Channel(id, ownerId, name, createdAt, description, avatar);
+        return new Channel(id, ownerId, name, alias, createdAt, description, avatar);
     }
 
     async getChannels(): Promise<Channel[]> {
@@ -68,6 +70,7 @@ export class ChannelsService {
             x.id,
             x.ownerId,
             x.name,
+            x.alias,
             x.createdAt,
             x.description,
             x.avatar,
@@ -85,11 +88,12 @@ export class ChannelsService {
             id,
             ownerId,
             name,
+            alias,
             createdAt,
             description,
             avatar,
         } = await this.channelsRepository.editChannel(userId, editChannelData);
 
-        return new Channel(id, ownerId, name, createdAt, description, avatar);
+        return new Channel(id, ownerId, name, alias, createdAt, description, avatar);
     }
 }

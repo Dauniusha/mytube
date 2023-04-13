@@ -12,6 +12,11 @@ const routes: Routes = [
     canActivate: [AuthenticationGuard, onboardingGuard()],
   },
   {
+    path: 'profile/:username',
+    loadChildren: () => import('./youtube/pages/profile/profile.module').then((m) => m.ProfileModule),
+    canActivate: [AuthenticationGuard, onboardingGuard()],
+  },
+  {
     path: 'video/:id',
     loadChildren: () => import('./youtube/pages/detailed-information/detailed-information.module').then((m) => m.DetailedInformationModule),
     canActivate: [AuthenticationGuard, onboardingGuard()],

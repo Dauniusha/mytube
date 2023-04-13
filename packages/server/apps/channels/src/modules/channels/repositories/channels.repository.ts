@@ -15,6 +15,7 @@ export class ChannelsRepository {
         dbClient?: Prisma.TransactionClient,
     ) {
         const client = dbClient || this.prismaService.client;
+        console.log(channel)
 
         return client.channel.create({
             data: {
@@ -41,10 +42,10 @@ export class ChannelsRepository {
         });
     }
 
-    getChannelById(channelId: string) {
+    getChannelByAlias(alias: string) {
         return this.prismaService.client.channel.findUnique({
             where: {
-                id: channelId,
+                alias,
             },
         });
     }

@@ -11,6 +11,9 @@ export class Channel {
     @Field()
     name: string;
 
+    @Field()
+    alias: string;
+
     @Field({ nullable: true })
     description?: string;
 
@@ -24,6 +27,7 @@ export class Channel {
         id: string,
         owner: string,
         name: string,
+        alias: string,
         createdAt: Date,
         description?: string,
         avatar?: string,
@@ -31,6 +35,7 @@ export class Channel {
         this.id = id;
         this.owner = owner;
         this.name = name;
+        this.alias = alias;
         this.createdAt = createdAt;
         this.description = description;
         this.avatar = avatar;
