@@ -1,9 +1,9 @@
-query getProfile {
-    getUserProfile {
-        email,
-        username,
-        firstName,
-        lastName,
-        avatar,
+query getProfile($username: String!) {
+    getUserProfileByUsername(username: $username) {
+        email
+        lastName
+        firstName
+        username
+        avatar
     }
 }

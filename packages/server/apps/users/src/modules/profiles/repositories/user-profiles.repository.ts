@@ -47,4 +47,12 @@ export class UserProfilesRepository {
             },
         });
     }
+
+    getProfileByUsername(username: string) {
+        return this.prismaService.client.userProfile.findUnique({
+            where: {
+                username,
+            },
+        });
+    }
 }

@@ -50,23 +50,32 @@ export class ProfilesService {
         } = await this.userProfilesRepository.getProfile(userEmail) || {};
 
         if (!email) {
-            throw new Error(`User profile for email: ${userEmail} already exists.`);
+            throw new Error(`User profile for email: ${userEmail} not found.`);
+        }
+
+        return new UserProfile(email, firstName, lastName, username, avatar);
+    }
+
+    async getProfileByUsername(username: string) {
+        const {
+            email,
+            firstName,
+            lastName,
+            avatar,
+        } = await this.userProfilesRepository.getProfile(username) || {};
+
+        if (!email) {
+            throw new Error(`User profile for username: ${username} not found.`);
         }
 
         return new UserProfile(email, firstName, lastName, username, avatar);
     }
 
     async editProfile(userEmail: string, editProfileData: EditUserProfileInput) {
-        const user = await this.usersRepository.getUser(userEmail);
+        const profile = await this.userProfilesRepository.getProfile(userEmail);
 
-        if (!user) {
-            throw new Error(`User with email: ${userEmail} doesn't exists.`);
-        }
-
-        const profile = await this.userProfilesRepository.getProfile(user.email);
-
-        if (profile) {
-            throw new Error(`User profile for email: ${user.email} already exists.`);
+        if (!profile) {
+            throw new Error(`User profile for email: ${userEmail} doesn't exists.`);
         }
 
         const {
@@ -75,7 +84,7 @@ export class ProfilesService {
             lastName,
             username,
             avatar,
-        } = await this.userProfilesRepository.editProfile(user.email, editProfileData);
+        } = await this.userProfilesRepository.editProfile(userEmail, editProfileData);
         
         return new UserProfile(email, firstName, lastName, username, avatar);
     }

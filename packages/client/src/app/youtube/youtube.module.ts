@@ -1,15 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CreateChannelComponent } from './onboarding/pages/create-channel/create-channel.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
-import { OnboardingModule } from './onboarding/onboarding.module';
+import { MatIconModule } from '@angular/material/icon';
+import { ChannelComponent } from './pages/channel/channel.component';
 
 @NgModule({
   declarations: [
+    ChannelComponent
   ],
   imports: [
     CommonModule,
+    MatFormFieldModule,
+    MatIconModule,
+    ReactiveFormsModule,
   ],
 })
 export class YoutubeModule { }
