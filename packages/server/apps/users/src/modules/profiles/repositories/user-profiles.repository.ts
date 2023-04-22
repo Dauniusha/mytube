@@ -40,10 +40,11 @@ export class UserProfilesRepository {
         });
     }
 
-    getProfile(email: string) {
+    getProfile(email?: string, username?: string) {
         return this.prismaService.client.userProfile.findUnique({
             where: {
-                email: email.toUpperCase(),
+                username,
+                email: email?.toUpperCase(),
             },
         });
     }

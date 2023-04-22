@@ -1,0 +1,11 @@
+query getMyChannel {
+    getMyChannel {
+        id
+        owner
+        name
+        alias
+        description
+        avatar
+        createdAt
+    }
+}

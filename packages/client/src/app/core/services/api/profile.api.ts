@@ -12,9 +12,9 @@ export class ProfileApi {
     private readonly editProfileGql: EditProfileGQL,
   ) {}
 
-  getProfile(username: string): Observable<GetProfileQuery> {
-    console.log(username)
-    return this.getProfileGql.fetch({ username })
+  getProfile(userId?: string, username?: string): Observable<GetProfileQuery> {
+    console.log({ userId, username })
+    return this.getProfileGql.fetch({ userId, username })
       .pipe(map((data) => data.data));
   }
 

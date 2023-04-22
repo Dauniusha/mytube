@@ -1,1 +1,73 @@
-<p>channel works!</p>
+<div *ngIf="loadingService.isLoading; then loaders else loaded"></div>
+
+<ng-template #loaders>
+  <app-loaders></app-loaders>
+</ng-template>
+
+<ng-template #loaded>
+  <div class="profile-container">
+    <div>
+      <h2 class="title profile-title">Channel</h2>
+      <div *ngIf="username">
+        <a class="channel-redirect" [routerLink]="['../../profile', username]">
+            <mat-icon matSuffix class="channel-redirect__icon">person</mat-icon>
+            <p class="channel-redirect__text">Profile</p>
+          </a>
+      </div>
+      <a class="channel-redirect" [routerLink]="['./videos']">
+        <mat-icon matSuffix class="channel-redirect__icon">movie</mat-icon>
+        <p class="channel-redirect__text">Videos</p>
+      </a>
+    </div>
+    <div *ngIf="isOwner | async; then owner else member"></div>
+
+    <ng-template #owner>
+      <form class="profile" [formGroup]="channelForm" (submit)="editChannel($event)">
+        <ng-container *ngTemplateOutlet="channelData"></ng-container>
+        <button
+          type="submit"
+          mat-raised-button class="submit-btn"
+          color="primary"
+          [ngClass]="{ 'disabled-btn': channelForm.invalid }"
+        >Edit</button>
+      </form>
+    </ng-template>
+
+    <ng-template #member>
+      <div class="profile">
+        <ng-container *ngTemplateOutlet="channelData"></ng-container>
+      </div>
+    </ng-template>
+
+
+    <ng-template #channelData>
+      <div class="avatar-username-container">
+        <div mat-card-avatar class="profile-avatar">
+          <input type="file" accept="image/*" (change)="uploadAvatar($event)"/>
+          <div *ngIf="avatarUrlSubject | async; then image else placeholder"></div>
+          <ng-template #image>
+            <img [src]="avatarUrlSubject | async" alt="avatar" class="profile-avatar__avatar">
+          </ng-template>
+          
+          <ng-template #placeholder>
+            <mat-icon matSuffix class="profile-avatar__placeholder">perm_identity</mat-icon>
+          </ng-template>
+        </div>
+        <div class="editable-field">
+          <p class="editable-field__label">Alias</p>
+          <input type="text" class="editable-field__input" [formControl]="alias">
+          <mat-error *ngIf="alias.invalid">Should be set of less than 20 letters and digits</mat-error>
+        </div>
+      </div> 
+      <div class="editable-field">
+        <p class="editable-field__label">Name</p>
+        <input type="text" class="editable-field__input" [formControl]="name">
+        <mat-error *ngIf="name.invalid">Should be more than 5 characters</mat-error>
+      </div>
+      <div class="editable-field">
+        <p class="editable-field__label">Description</p>
+        <input cdkTextareaAutosize type="text" class="editable-field__input" [formControl]="description">
+      </div>
+    </ng-template>
+  </div>
+</ng-template>

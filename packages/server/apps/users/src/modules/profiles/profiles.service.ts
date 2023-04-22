@@ -40,32 +40,23 @@ export class ProfilesService {
         return new UserProfile(email, firstName, lastName, username, avatar);
     }
 
-    async getProfile(userEmail: string) {
+    async getProfile(userId?: string, profileUsername?: string) {
+        if (!userId && !profileUsername) {
+            throw new Error(`User id or username should present.`);
+        }
+
         const {
             email,
             firstName,
             lastName,
             username,
             avatar,
-        } = await this.userProfilesRepository.getProfile(userEmail) || {};
+        } = await this.userProfilesRepository.getProfile(userId, profileUsername) || {};
 
         if (!email) {
-            throw new Error(`User profile for email: ${userEmail} not found.`);
-        }
-
-        return new UserProfile(email, firstName, lastName, username, avatar);
-    }
-
-    async getProfileByUsername(username: string) {
-        const {
-            email,
-            firstName,
-            lastName,
-            avatar,
-        } = await this.userProfilesRepository.getProfile(username) || {};
-
-        if (!email) {
-            throw new Error(`User profile for username: ${username} not found.`);
+            throw new Error(
+                `User profile for username: ${profileUsername} or user id: ${userId} not found.`,
+            );
         }
 
         return new UserProfile(email, firstName, lastName, username, avatar);

@@ -1,5 +1,5 @@
 query getMyProfile {
-    getUserProfile {
+    getMyProfile {
         email,
         username,
         firstName,

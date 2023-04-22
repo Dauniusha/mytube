@@ -49,7 +49,11 @@ export class ChannelsService {
         return new Channel(id, ownerId, name, alias, createdAt, description, avatar);
     }
 
-    async getChannel(channelAlias: string): Promise<Channel> {
+    async getChannel(channelOwnerId?: string, channelAlias?: string): Promise<Channel> {
+        if (!channelOwnerId && !channelAlias) {
+            throw new Error('Owner Id or alias should be present.');
+        }
+
         const {
             id,
             ownerId,
@@ -58,7 +62,20 @@ export class ChannelsService {
             createdAt,
             description,
             avatar,
-        } = await this.channelsRepository.getChannelByAlias(channelAlias);
+        } = await this.channelsRepository.getChannelByAlias(channelOwnerId, channelAlias);
+
+        return new Channel(id, ownerId, name, alias, createdAt, description, avatar);
+    }
+
+    async getMyChannel(ownerId: string): Promise<Channel> {
+        const {
+            id,
+            name,
+            alias,
+            createdAt,
+            description,
+            avatar,
+        } = await this.channelsRepository.getChannelByUserId(ownerId);
 
         return new Channel(id, ownerId, name, alias, createdAt, description, avatar);
     }

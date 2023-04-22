@@ -1,5 +1,5 @@
-query getChannel($alias: String!) {
-    getChannel(alias: $alias) {
+query getChannel($ownerId: String, $alias: String) {
+    getChannel(ownerId: $ownerId, alias: $alias) {
         id
         owner
         name

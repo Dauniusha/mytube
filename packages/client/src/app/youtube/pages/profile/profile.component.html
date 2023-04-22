@@ -8,11 +8,14 @@
   <div class="profile-container">
     <div>
       <h2 class="title profile-title">Profile</h2>
-      <a class="channel-redirect" [routerLink]="['../../channel', username.value]">
-        <mat-icon matSuffix class="channel-redirect__icon">smart_display</mat-icon>
-        <p class="channel-redirect__text">Channel</p>
-      </a>
+      <div *ngIf="channelAlias">
+        <a class="channel-redirect" [routerLink]="['../../channel', channelAlias]">
+          <mat-icon matSuffix class="channel-redirect__icon">smart_display</mat-icon>
+          <p class="channel-redirect__text">Channel</p>
+        </a>
+      </div>
     </div>
+
     <div *ngIf="isOwner | async; then owner else member"></div>
 
     <ng-template #owner>

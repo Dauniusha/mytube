@@ -7,7 +7,7 @@ import { JwtAuthGuard, User } from '../../core/auth';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import {
     CREATE_CHANNEL_TOPIC, EDIT_CHANNEL_TOPIC,
-    GET_CHANNELS_TOPIC, GET_CHANNEL_TOPIC,
+    GET_CHANNELS_TOPIC, GET_CHANNEL_TOPIC, GET_MY_CHANNEL_TOPIC,
 } from '@mytube/shared/channels/constants/channels';
 import { Channel, CreateChannelInput, EditChannelInput, GetChannelArgs } from '@mytube/shared/channels/models/channels';
 import { CHANNELS_MICROCERVICE } from '@mytube/infrastructure';
@@ -19,6 +19,7 @@ export class ChannelsResolver implements OnModuleInit {
 
     async onModuleInit() {
         this.channelsClient.subscribeToResponseOf(GET_CHANNEL_TOPIC);
+        this.channelsClient.subscribeToResponseOf(GET_MY_CHANNEL_TOPIC);
         this.channelsClient.subscribeToResponseOf(GET_CHANNELS_TOPIC);
         this.channelsClient.subscribeToResponseOf(CREATE_CHANNEL_TOPIC);
         this.channelsClient.subscribeToResponseOf(EDIT_CHANNEL_TOPIC);
@@ -27,7 +28,12 @@ export class ChannelsResolver implements OnModuleInit {
 
     @Query(() => Channel)
     getChannel(@Args() getChannelArgs: GetChannelArgs) {
-        return this.channelsClient.send(GET_CHANNEL_TOPIC, getChannelArgs);
+        return this.channelsClient.send(GET_CHANNEL_TOPIC, { message: getChannelArgs });
+    }
+
+    @Query(() => Channel)
+    getMyChannel(@User() user: TokenPayload) {
+        return this.channelsClient.send(GET_MY_CHANNEL_TOPIC, { user });
     }
 
     @Query(() => [Channel])
@@ -40,7 +46,6 @@ export class ChannelsResolver implements OnModuleInit {
         @Args('createChannelData') createChannelData: CreateChannelInput,
         @User() user: TokenPayload,
     ) {
-        console.log(createChannelData)
         return this.channelsClient.send(CREATE_CHANNEL_TOPIC, {
             message: createChannelData,
             user,

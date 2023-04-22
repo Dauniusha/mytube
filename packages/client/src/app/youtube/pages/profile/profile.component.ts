@@ -1,13 +1,27 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, ReplaySubject } from 'rxjs';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { BehaviorSubject, catchError, map, mergeMap, of, ReplaySubject, tap } from 'rxjs';
+import { ChannelsApi } from '../../../core/services/api/channel.api';
 import { ProfileApi } from '../../../core/services/api/profile.api';
 import { LoadingService } from '../../../core/services/loader/loading.service';
 import { MyProfileService } from '../../../core/services/profile.service';
 import { convertBase64 } from '../../../core/utils/base64-converter';
+import { SharedModule } from '../../../shared/shared.module';
 
 @Component({
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    SharedModule,
+    RouterModule,
+  ],
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
@@ -38,12 +52,15 @@ export class ProfileComponent implements OnInit {
 
   isOwner = new BehaviorSubject<boolean>(false);
 
+  channelAlias: string | null = null;
+
   constructor(
     readonly loadingService: LoadingService,
     private readonly profileApi: ProfileApi,
     private readonly myProfileService: MyProfileService,
     private readonly activatedRoute: ActivatedRoute,
     private readonly router: Router,
+    private readonly channelsApi: ChannelsApi
   ) {}
 
   private fillProfile(
@@ -61,34 +78,42 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.loadingService.loading();
 
-    this.myProfileService.myProfile$
-      .subscribe(({ getUserProfile: myProfile }) => {
-        const { username } = this.activatedRoute.snapshot.params;
+    const { username } = this.activatedRoute.snapshot.params;
 
-        if (myProfile.username === username) {
-          this.isOwner.next(true);
-          
-          this.fillProfile(
-            myProfile.firstName,
-            myProfile.lastName,
-            myProfile.username,
-            myProfile.avatar,
-          );
+    this.profileApi.getProfile(undefined, username)
+      .pipe(
+        mergeMap(({ getUserProfile: profile }) => this.myProfileService.myProfile$.pipe(
+          map(({ getMyProfile: myProfile }) => ({
+            ...profile,
+            isOwner: myProfile.username === profile.username,
+          })),
+          catchError(() => of({
+            ...profile,
+            isOwner: false,
+          })),
+        )),
+        mergeMap((profile) => this.channelsApi.getChannel(profile.email).pipe(
+          map(({ alias }) => ({
+            ...profile,
+            alias,
+          })),
+          catchError(() => of({
+            ...profile,
+            alias: null,
+          })),
+        )),
+      ).subscribe((profile) => {
+        this.fillProfile(
+          profile.firstName,
+          profile.lastName,
+          profile.username,
+          profile.avatar,
+        );
 
-          this.loadingService.loaded();
-        } else {
-          this.profileApi.getProfile(username)
-            .subscribe(({ getUserProfileByUsername: profile }) => {
-              this.fillProfile(
-                profile.firstName,
-                profile.lastName,
-                profile.username,
-                profile.avatar,
-              );
+        this.isOwner.next(profile.isOwner);
+        this.channelAlias = profile.alias;
 
-              this.loadingService.loaded();
-            });
-        }
+        this.loadingService.loaded();
       });
   }
 

@@ -1,5 +1,5 @@
-query getProfile($username: String!) {
-    getUserProfileByUsername(username: $username) {
+query getProfile($userId: String, $username: String) {
+    getUserProfile(userId: $userId, username: $username) {
         email
         lastName
         firstName

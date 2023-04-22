@@ -13,6 +13,7 @@ import { appReducers } from './redux/reducers/app.reducer';
 import { GraphQLModule } from './graphql/graphql.module';
 import { JwtHelperService, JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { MatSelectCountryModule } from '@angular-material-extensions/select-country';
+import { YoutubeModule } from './youtube/youtube.module';
 
 @NgModule({
   declarations: [

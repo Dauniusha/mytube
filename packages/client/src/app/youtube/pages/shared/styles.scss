@@ -1,0 +1,141 @@
+$mainColor: #333;
+$secondColor: #f2f2f2;
+$textSecondColor: #828282;
+$inputColor: #e0e0e0;
+$buttonColor: #2F80ED;
+$linkColor: #518edd;
+$inputTheme: #3f51b5;
+$errorColor: #f44336;
+
+:host {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-container {
+  height: 50vh;
+  display: flex;
+  padding: 6vh;
+  border-radius: 2vh;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+.profile-title {
+  font-size: 4vh;
+  margin: 0 80px 0 0;
+  padding: 0 40px 2vh 0;
+  border-bottom: 1px solid $textSecondColor;
+}
+
+.channel-redirect {
+  margin-top: 2vh;
+  display: flex;
+  align-items: center;
+  font-size: 2vh;
+  color: #333;
+  text-decoration: none;
+
+  &__icon {
+    margin-right: 10px;
+  }
+}
+
+.channel-redirect:hover {
+  color: $buttonColor;
+}
+
+.profile {
+  .avatar-username-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3vh;
+
+    .editable-field {
+      margin: 0;
+    }
+  }
+
+  &-avatar {
+    position: relative;
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    border: 2px solid $textSecondColor;
+    box-shadow: 2px 2px 4px rgb(0 0 0 / 30%);
+    margin-right: 25px;
+
+    input {
+      z-index: 100;
+      position: absolute;
+      border-radius: inherit;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    &__avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+    }
+    
+    &__placeholder {
+      width: 40px;
+      height: 40px;
+      font-size: 40px;
+      color: $textSecondColor;
+      transform: translate3d(12px, 12px, 0);
+    }
+  }
+
+  .editable-field {
+    width: 180px;
+    margin-bottom: 2vh;
+
+    &__label {
+      font-size: 1.8vh;
+      padding-left: 8px;
+      color: $textSecondColor;
+    }
+
+    &__input {
+      box-sizing: border-box;
+      width: inherit;
+      font-size: 2.6vh;
+      padding: 8px;
+      border-radius: 8px;
+
+      &:hover {
+        background-color: #e0e0e0;
+      }
+    }
+  }
+
+  .submit-btn {
+    display: block;
+    border: none;
+    font-size: 2vh;
+    margin-right: 0;
+    margin-left: auto;
+    box-sizing: border-box;
+    padding: 1.2vh 3vh;
+    letter-spacing: 0.8px;
+    color: #fff;
+    font-weight: 400;
+    background: $buttonColor;
+    align-self: flex-end;
+    outline: none;
+    text-decoration: none;
+    border-radius: 1vh;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

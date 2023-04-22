@@ -3,10 +3,10 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 import { CreateUserProfileInput, EditUserProfileInput, GetUserProfileArgs, UserProfile } from '@mytube/shared/users/models/user-profiles';
 import { TokenPayload } from '@mytube/shared/users/models/auth';
 import {
-    GET_USER_PROFYLE_BY_USERNAME_TOPIC,
+    GET_MY_PROFILE_TOPIC,
     CREATE_USER_PROFILE_TOPIC,
     EDIT_USER_PROFILE_TOPIC,
-    GET_USER_PROFILE_TOPIC,
+    GET_USER_PROFILE_TOPIC
 } from '@mytube/shared/users/constants/user-profiles';
 import { ProfilesService } from './profiles.service';
 
@@ -14,16 +14,16 @@ import { ProfilesService } from './profiles.service';
 export class ProfilesController {
     constructor(private readonly profilesService: ProfilesService) {}
 
-    @MessagePattern(GET_USER_PROFILE_TOPIC)
-    getUserProfile(@Payload('email') email: string): Promise<UserProfile> {
+    @MessagePattern(GET_MY_PROFILE_TOPIC)
+    getMyProfile(@Payload('email') email: string): Promise<UserProfile> {
         return this.profilesService.getProfile(email);
     }
 
-    @MessagePattern(GET_USER_PROFYLE_BY_USERNAME_TOPIC)
-    getUserProfileByUsername(
+    @MessagePattern(GET_USER_PROFILE_TOPIC)
+    getUserProfile(
         @Payload('message') message: GetUserProfileArgs,
     ): Promise<UserProfile> {
-        return this.profilesService.getProfileByUsername(message.username);
+        return this.profilesService.getProfile(message.userId, message.username);
     }
 
     @MessagePattern(CREATE_USER_PROFILE_TOPIC)

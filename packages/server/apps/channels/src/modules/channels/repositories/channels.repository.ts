@@ -42,9 +42,10 @@ export class ChannelsRepository {
         });
     }
 
-    getChannelByAlias(alias: string) {
+    getChannelByAlias(ownerId?: string, alias?: string) {
         return this.prismaService.client.channel.findUnique({
             where: {
+                ownerId,
                 alias,
             },
         });

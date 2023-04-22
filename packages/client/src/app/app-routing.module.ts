@@ -13,7 +13,12 @@ const routes: Routes = [
   },
   {
     path: 'profile/:username',
-    loadChildren: () => import('./youtube/pages/profile/profile.module').then((m) => m.ProfileModule),
+    loadComponent: () => import('./youtube/pages/profile/profile.component').then((c) => c.ProfileComponent),
+    canActivate: [AuthenticationGuard, onboardingGuard()],
+  },
+  {
+    path: 'channel/:alias',
+    loadComponent: () => import('./youtube/pages/channel/channel.component').then((c) => c.ChannelComponent),
     canActivate: [AuthenticationGuard, onboardingGuard()],
   },
   {
