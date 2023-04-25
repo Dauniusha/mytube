@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { CoreModule } from './modules/core/core.module';
-import { VideosModule } from './modules/videos/videos/videos.module';
+import { VideoStreamingModule } from './modules/videos/video-streaming/video-streaming.module';
 
 @Module({
   imports: [
@@ -10,9 +10,9 @@ import { VideosModule } from './modules/videos/videos/videos.module';
       isGlobal: true,
     }),
     CoreModule,
-    VideosModule,
+    VideoStreamingModule,
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class ApiModule {}

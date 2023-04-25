@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import {
     CreateUserProfileInput, EditUserProfileInput, UserProfile,
 } from '@mytube/shared/users/models/user-profiles';

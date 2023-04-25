@@ -1,15 +1,13 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { ChannelComponent } from './pages/channel/channel.component';
-import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
+import { SharedModule } from '../../../shared/shared.module';
 
-@NgModule({
-  declarations: [
-  ],
+@Component({
+  standalone: true,
   imports: [
     CommonModule,
     MatFormFieldModule,
@@ -18,5 +16,10 @@ import { RouterModule } from '@angular/router';
     SharedModule,
     RouterModule,
   ],
+  selector: 'app-video',
+  templateUrl: './video.component.html',
+  styleUrls: ['./video.component.scss']
 })
-export class YoutubeModule { }
+export class VideoComponent {
+
+}

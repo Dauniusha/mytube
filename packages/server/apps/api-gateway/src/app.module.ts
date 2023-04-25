@@ -8,6 +8,7 @@ import { Void } from '@mytube/shared/core/scalars/void.scalar';
 import { DateScalar } from '@mytube/shared/core/scalars/date.scalar';
 import { UsersModule } from './modules/users/users.module';
 import { ChannelsModule } from './modules/channels/channels.module';
+import { VideosModule } from './modules/videos/videos.module';
 
 @Module({
     imports: [
@@ -27,6 +28,7 @@ import { ChannelsModule } from './modules/channels/channels.module';
         CoreModule,
         UsersModule,
         ChannelsModule,
+        VideosModule,
     ],
     providers: [DateScalar],
     controllers: [],

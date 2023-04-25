@@ -22,9 +22,9 @@ const routes: Routes = [
     canActivate: [AuthenticationGuard, onboardingGuard()],
   },
   {
-    path: 'video/:id',
-    loadChildren: () => import('./youtube/pages/detailed-information/detailed-information.module').then((m) => m.DetailedInformationModule),
-    canActivate: [AuthenticationGuard, onboardingGuard()],
+    path: 'videos/:id',
+    loadComponent: () => import('./youtube/pages/video/video.component').then((c) => c.VideoComponent),
+    canActivate: [],
   },
   {
     path: 'create',
