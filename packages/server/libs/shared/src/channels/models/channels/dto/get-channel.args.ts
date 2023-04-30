@@ -1,8 +1,13 @@
 import { ArgsType, Field } from '@nestjs/graphql';
-import { IsEmail, IsOptional, IsString, Matches } from 'class-validator';
+import { IsEmail, IsOptional, IsString, IsUUID, Matches } from 'class-validator';
 
 @ArgsType()
 export class GetChannelArgs {
+    @Field({ nullable: true })
+    @IsOptional()
+    @IsUUID()
+        id?: string;
+
     @Field({ nullable: true })
     @IsOptional()
     @IsString()

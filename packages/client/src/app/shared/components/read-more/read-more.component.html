@@ -1,0 +1,16 @@
+<div [class.collapsed]="isCollapsed" [style.height]="isCollapsed ? maxHeight+'px' : 'auto'">
+  <ng-content select=".read-more__content"></ng-content>
+</div>
+<div
+  *ngIf="isCollapsable"
+  (click)="switch()"
+><div *ngIf="isCollapsed; then showMore else showLess"></div>
+</div>
+
+<ng-template #showMore>
+  <ng-content select=".read-more__more"></ng-content>
+</ng-template>
+
+<ng-template #showLess>
+  <ng-content select=".read-more__less"></ng-content>
+</ng-template>

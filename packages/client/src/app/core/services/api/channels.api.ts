@@ -13,8 +13,8 @@ export class ChannelsApi {
     private readonly editChannelGql: EditChannelGQL,
   ) {}
 
-  getChannel(ownerId?: string, alias?: string) {
-    return this.getChannelGql.fetch({ ownerId, alias })
+  getChannel(ownerId?: string, alias?: string, id?: string) {
+    return this.getChannelGql.fetch({ ownerId, alias, id })
       .pipe(map((data) => data.data.getChannel));
   }
 

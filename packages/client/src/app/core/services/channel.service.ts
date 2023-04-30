@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import { GetMyChannelQuery } from '../../graphql/types.generated';
-import { ChannelsApi } from './api/channel.api';
+import { ChannelsApi } from './api/channels.api';
 
 @Injectable({
   providedIn: 'root',

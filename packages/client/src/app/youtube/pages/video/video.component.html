@@ -1,3 +1,122 @@
-<video id="videoPlayer" width="70%" controls autoplay muted="false">
-  <source src="http://localhost:3000/videos/1ec331eb-1a40-42f0-8555-7703588a60c8/play" type="video/mp4" />
-</video>
+<div class="detailed-information">
+  <div *ngIf="loadingService.isLoading; then loaders else loaded"></div>
+
+  <ng-template #loaders>
+    <app-loaders></app-loaders>
+  </ng-template>
+
+  <ng-template #loaded>
+    <button mat-raised-button class="detailed-information__btn"
+      [isMain]="true" [appSetColorDatePlaceholder]="video.createdAt"
+      (click)="location.back()">
+      <mat-icon class="detailed-information__icon">arrow_back_ios_new</mat-icon>
+    </button>
+    <div class="detailed-information__video">
+      <div *ngIf="video.id; then videoPlayer else preview"></div>
+      <!-- TODO: preview from input -->
+      <ng-template #preview>
+        <img [src]="channel.avatar" class="video__preview", alt="preview">
+      </ng-template>
+  
+      <ng-template #videoPlayer>
+        <video class="video__player" controls muted="false" controlsList="nodownload">
+          <source [src]="this.videoStreamingApiUrl + '/' + video.id + '/play'" type="video/mp4" />
+        </video>
+      </ng-template>
+    </div>
+    <div [isMain]="true" [appSetColorDatePlaceholder]="video.createdAt" class="detailed-information-content">
+      <div class="detailed-information-content__title-date">
+        <h3 class="detailed-information-content__title">{{video.name}}</h3>
+        <p class="detailed-information-content__date">{{video.createdAt | date: 'fullDate'}}</p>
+      </div>
+      <div class="video-details">
+        <div class="video-details__channel-details-container" [routerLink]="['../../channel', channel.alias]">
+          <div mat-card-avatar class="avatar channel-avatar">
+            <div *ngIf="channel.avatar; then image else placeholder"></div>
+            <ng-template #image>
+              <img [src]="channel.avatar" class="channel__avatar" alt="channel-avatar">
+            </ng-template>
+            
+            <ng-template #placeholder>
+              <mat-icon matSuffix class="onboarding-avatar__placeholder">perm_identity</mat-icon>
+            </ng-template>
+          </div>
+          <div class="channel-description">
+            <p class="channel-description__name">{{channel.name}}</p>
+            <p
+              class="channel-description__subcribers"
+              >{{channel.subscribers.toString() | statisticsFilter}} subscribers
+            </p>
+          </div>
+          <div class="border"></div>
+          <div class="subscribe-section">
+            <mat-icon matSuffix class="subscribe-section__icon">notifications</mat-icon>
+          </div>
+        </div>
+        <div class="active-btns">
+          <button mat-raised-button color="primary" class="active-btn">
+            <mat-icon matSuffix class="active-btn__icon">favorite</mat-icon>
+          </button>
+          <button mat-raised-button color="primary" class="active-btn">
+            <mat-icon matSuffix class="active-btn__icon">favorite_border</mat-icon>
+          </button>
+        </div>
+      </div>
+      <p class="detailed-information-content__description-title">Description:</p>
+      <p class="detailed-information-content__description-text">{{video.description}}</p>
+      <div class="add-comment-section">
+        <img class="avatar user-avatar" [src]="profile.avatar">
+        <textarea
+          [formControl]="myComment"
+          cdkTextareaAutosize
+          class="comments-input"
+          cdkAutosizeMaxRows="3"
+          placeholder="Leave your comment here!"
+        ></textarea>
+        <button
+          (click)="addComment()"
+          *ngIf="myComment.value?.length"
+          class="active-btn comment-btn"
+          mat-raised-button
+          color="primary"
+        ><mat-icon matSuffix class="active-btn__icon">add</mat-icon></button>
+      </div>
+      <div class="comments">
+        <div class="comments__comment" *ngFor="let comment of comments">
+          <div mat-card-avatar class="avatar user-avatar">
+            <div *ngIf="comment.avatar; then userAvatar else userPlaceholder"></div>
+            <ng-template #userAvatar>
+              <img [src]="comment.avatar">
+            </ng-template>
+            
+            <ng-template #userPlaceholder>
+              <mat-icon matSuffix class="user-avatar__icon">perm_identity</mat-icon>
+            </ng-template>
+          </div>
+          <div class="comment-main">
+            <div class="comment-info">
+              <p class="comment-info__username">{{comment.username}}</p>
+              <div class="comment-info__created-at">{{comment.createdAt | dateAgo }}</div>
+            </div>
+            <read-more [maxHeight]="40">
+              <p class="read-more__content comment-content">{{comment.content}}</p>
+              <p class="read-more__more comment-content__placeholder">Show more</p>
+              <p class="read-more__less comment-content__placeholder">Show less</p>
+            </read-more>
+          </div>
+        </div>
+      </div>
+      <div class="detailed-information-content__statistics-container">
+        <app-card-statistics
+          class="detailed-information-content__statistics"
+          [statistics]="video.statistics">
+        </app-card-statistics>
+      </div>
+      <div
+        [isMain]="false"
+        [appSetColorDatePlaceholder]="video.createdAt"
+        class="detailed-information__date-placeholder"
+      ></div>
+    </div>
+  </ng-template>
+</div>

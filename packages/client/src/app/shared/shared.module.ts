@@ -11,6 +11,8 @@ import { InputComponent } from './components/input/input.component';
 import { TitleButtonDateComponent } from './components/cards/title-button-date/title-button-date.component';
 import { CardPreviewComponent } from './components/cards/card-preview/card-preview.component';
 import { TitleFilterPipe } from '../youtube/pipes/title-filter.pipe';
+import { ReadMoreComponent } from './components/read-more/read-more.component';
+import { DateAgoPipe } from '../youtube/pipes/date-ago.pipe';
 
 @NgModule({
   declarations: [
@@ -22,8 +24,10 @@ import { TitleFilterPipe } from '../youtube/pipes/title-filter.pipe';
 
     StatisticsFilterPipe,
     TitleFilterPipe,
+    DateAgoPipe,
 
     SetColorDatePlaceholderDirective,
+    ReadMoreComponent,
   ],
   imports: [
     CommonModule,
@@ -39,6 +43,9 @@ import { TitleFilterPipe } from '../youtube/pipes/title-filter.pipe';
     SetColorDatePlaceholderDirective,
     LoadersComponent,
     InputComponent,
+    ReadMoreComponent,
+    StatisticsFilterPipe,
+    DateAgoPipe,
   ],
 })
 export class SharedModule { }

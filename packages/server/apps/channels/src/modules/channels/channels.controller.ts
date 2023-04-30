@@ -17,7 +17,11 @@ export class ChannelsController {
 
     @MessagePattern(GET_CHANNEL_TOPIC)
     getChannel(@Payload('message') getChannelArgs: GetChannelArgs): Promise<Channel> {
-        return this.channelsService.getChannel(getChannelArgs.ownerId, getChannelArgs.alias);
+        return this.channelsService.getChannel(
+            getChannelArgs.ownerId,
+            getChannelArgs.alias,
+            getChannelArgs.id,
+        );
     }
 
     @MessagePattern(GET_CHANNELS_TOPIC)

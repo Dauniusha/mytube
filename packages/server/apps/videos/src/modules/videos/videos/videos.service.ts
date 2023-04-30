@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { CreateVideoInput, PresignedUrl } from "@mytube/shared/videos/models/videos";
+import { CreateVideoInput, GetVideoArgs, PresignedUrl, Video } from "@mytube/shared/videos/models/videos";
 import { VideosRepository } from "../repositories/videos.repository";
 import { S3Service } from "../infrastructure/s3.service";
 import { PrismaService } from "../../core/prisma/prisma.service";
@@ -34,5 +34,31 @@ export class VideosService {
         return new PresignedUrl(uploadUrl);
     }
 
-    
+    private async view(video: Video) {
+        await this.videosRepository.edit(video.id, {
+            views: video.views + 1,
+        });
+    }
+
+    async getById(request: GetVideoArgs): Promise<Video> {
+        const video = await this.videosRepository.getById(request.id);
+
+        if (!video) {
+            throw new Error(`Video ${request.id} was not found.`);
+        }
+
+        await this.view(video);
+
+        return new Video(
+            video.id,
+            video.name,
+            video.channelId,
+            video.preview,
+            video.likes,
+            video.views,
+            video.dislikes,
+            video.createdAt,
+            video.description,
+        );
+    }
 }

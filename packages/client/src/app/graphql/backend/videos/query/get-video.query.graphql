@@ -1,0 +1,13 @@
+query getVideo($videoId: String!) {
+    getVideo(id: $videoId) {
+        id
+        name
+        channelId
+        description
+        preview
+        likes
+        views
+        dislikes
+        createdAt
+    }
+}

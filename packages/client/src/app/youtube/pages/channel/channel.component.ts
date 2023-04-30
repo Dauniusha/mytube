@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BehaviorSubject, catchError, map, merge, mergeMap, of, tap } from 'rxjs';
-import { ChannelsApi } from '../../../core/services/api/channel.api';
+import { ChannelsApi } from '../../../core/services/api/channels.api';
 import { ProfileApi } from '../../../core/services/api/profile.api';
 import { MyChannelService } from '../../../core/services/channel.service';
 import { LoadingService } from '../../../core/services/loader/loading.service';
