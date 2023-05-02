@@ -50,14 +50,26 @@
           </div>
           <div class="border"></div>
           <div class="subscribe-section">
-            <mat-icon matSuffix class="subscribe-section__icon">notifications</mat-icon>
+            <mat-icon matSuffix class="subscribe-section__icon" (click)="subscribe()">notifications</mat-icon>
           </div>
         </div>
         <div class="active-btns">
-          <button mat-raised-button color="primary" class="active-btn">
+          <button
+            mat-raised-button
+            color="primary"
+            class="active-btn"
+            (click)="like()"
+            [class.active]="video.liked"
+          >
             <mat-icon matSuffix class="active-btn__icon">favorite</mat-icon>
           </button>
-          <button mat-raised-button color="primary" class="active-btn">
+          <button
+            mat-raised-button
+            color="primary"
+            class="active-btn"
+            (click)="dislike()"
+            [class.active]="video.unliked"
+          >
             <mat-icon matSuffix class="active-btn__icon">favorite_border</mat-icon>
           </button>
         </div>

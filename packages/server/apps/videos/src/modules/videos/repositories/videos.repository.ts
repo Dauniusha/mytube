@@ -42,6 +42,17 @@ export class VideosRepository {
         });
     }
 
+    getAggregatedById(id: string) {
+        return this.prismaService.client.video.findUnique({
+            where: {
+                id,
+            },
+            include: {
+                comments: true,
+            },
+        });
+    }
+
     getByName(name: string) {
         return this.prismaService.client.video.findUnique({
             where: {

@@ -4,6 +4,7 @@ import { ClientsModule } from '@nestjs/microservices';
 import { VideoStreamingController } from './videos/video-streaming.controller';
 import { VideosResolver } from './videos/videos.resolver';
 import { HttpModule } from '@nestjs/axios';
+import { CommentsResolver } from './comments/comments.resolver';
 
 @Module({
     imports: [
@@ -12,7 +13,7 @@ import { HttpModule } from '@nestjs/axios';
         ]),
         HttpModule,
     ],
-    providers: [VideosResolver],
+    providers: [VideosResolver, CommentsResolver],
     controllers: [VideoStreamingController],
 })
 export class VideosModule {}

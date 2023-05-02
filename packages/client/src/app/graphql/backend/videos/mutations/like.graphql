@@ -1,0 +1,5 @@
+mutation like($videoId: String!) {
+    like(videoId: $videoId) {
+        data
+    }
+}

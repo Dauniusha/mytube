@@ -56,4 +56,14 @@ export class UserProfilesRepository {
             },
         });
     }
+
+    getProfiles(userIds: string[]) {
+        return this.prismaService.client.userProfile.findMany({
+            where: {
+                email: {
+                    in: userIds,
+                },
+            },
+        });
+    }
 }

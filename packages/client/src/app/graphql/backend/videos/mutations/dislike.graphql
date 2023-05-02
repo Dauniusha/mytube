@@ -1,0 +1,5 @@
+mutation dislike($videoId: String!) {
+    dislike(videoId: $videoId) {
+        data
+    }
+}

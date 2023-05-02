@@ -16,7 +16,6 @@ export class ReadMoreComponent implements AfterViewInit {
   ngAfterViewInit() {
     const currentHeight = this.elementRef.nativeElement
       .getElementsByClassName('read-more__content')[0].clientHeight;
-      console.log(currentHeight)
 
     if (currentHeight > this.maxHeight) {
       this.isCollapsed = true;

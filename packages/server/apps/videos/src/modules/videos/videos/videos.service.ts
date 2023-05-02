@@ -1,8 +1,9 @@
 import { Injectable } from "@nestjs/common";
-import { CreateVideoInput, GetVideoArgs, PresignedUrl, Video } from "@mytube/shared/videos/models/videos";
+import { CreateVideoInput, GetVideoArgs, PresignedUrl, Video as VideoDto } from "@mytube/shared/videos/models/videos";
 import { VideosRepository } from "../repositories/videos.repository";
 import { S3Service } from "../infrastructure/s3.service";
 import { PrismaService } from "../../core/prisma/prisma.service";
+import { Video } from "../../../prisma/generated";
 
 @Injectable()
 export class VideosService {
@@ -40,8 +41,18 @@ export class VideosService {
         });
     }
 
-    async getById(request: GetVideoArgs): Promise<Video> {
-        const video = await this.videosRepository.getById(request.id);
+    private async getVideo(videoId: string): Promise<Video> {
+        const video = await this.videosRepository.getById(videoId);
+
+        if (!video) {
+            throw new Error(`Video ${videoId} was not found.`);
+        }
+
+        return video;
+    }
+
+    async getById(request: GetVideoArgs): Promise<VideoDto> {
+        const video = await this.videosRepository.getAggregatedById(request.id);
 
         if (!video) {
             throw new Error(`Video ${request.id} was not found.`);
@@ -49,7 +60,7 @@ export class VideosService {
 
         await this.view(video);
 
-        return new Video(
+        return new VideoDto(
             video.id,
             video.name,
             video.channelId,
@@ -58,7 +69,24 @@ export class VideosService {
             video.views,
             video.dislikes,
             video.createdAt,
+            video.comments,
             video.description,
         );
+    }
+
+    async like(videoId: string) {
+        const video = await this.getVideo(videoId);
+
+        await this.videosRepository.edit(videoId, {
+            likes: ++video.likes,
+        });
+    }
+
+    async dislike(videoId: string) {
+        const video = await this.getVideo(videoId);
+
+        await this.videosRepository.edit(videoId, {
+            dislikes: ++video.dislikes,
+        });
     }
 }

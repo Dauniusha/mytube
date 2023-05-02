@@ -8,6 +8,11 @@ query getVideo($videoId: String!) {
         likes
         views
         dislikes
+        comments {
+            content
+            createdAt
+            userId
+        }
         createdAt
     }
 }

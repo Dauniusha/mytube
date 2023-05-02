@@ -11,7 +11,6 @@ export class DateAgoPipe implements PipeTransform {
 
     const diff = Date.now() - date.getTime();
     const day = 1000 * 60 * 60 * 24;
-    console.log(diff / day)
     
     return Math.floor(diff / (day * 12 * 365.25))
       ? `${Math.floor(diff / (day * 60 * 24 * 365.25))} years ago`

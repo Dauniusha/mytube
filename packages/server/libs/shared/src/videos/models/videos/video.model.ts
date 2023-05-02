@@ -1,4 +1,5 @@
 import { Field, Int, ObjectType } from "@nestjs/graphql";
+import { Comment } from "./comment.model";
 
 @ObjectType()
 export class Video {
@@ -29,6 +30,9 @@ export class Video {
     @Field(() => Date)
     createdAt: Date;
 
+    @Field(() => [Comment])
+    comments: Comment[];
+
     constructor(
         id: string,
         name: string,
@@ -38,6 +42,7 @@ export class Video {
         views: number,
         dislikes: number,
         createdAt: Date,
+        comments: Comment[],
         description?: string,
     ) {
         this.id = id;
@@ -48,6 +53,7 @@ export class Video {
         this.views = views;
         this.dislikes = dislikes;
         this.createdAt = createdAt;
+        this.comments = comments;
         this.description = description;
     }
 }

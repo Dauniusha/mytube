@@ -1,0 +1,9 @@
+query getProfiles($userIds: [String!]!) {
+    getUserProfiles(userIds: $userIds) {
+        email
+        lastName
+        firstName
+        username
+        avatar
+    }
+}

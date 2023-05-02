@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { CommentsModule } from './modules/comments/comments.module';
 import { CoreModule } from './modules/core/core.module';
 import { VideosModule } from './modules/videos/videos/videos.module';
 
@@ -11,6 +12,7 @@ import { VideosModule } from './modules/videos/videos/videos.module';
     }),
     CoreModule,
     VideosModule,
+    CommentsModule,
   ],
   controllers: [],
   providers: [],

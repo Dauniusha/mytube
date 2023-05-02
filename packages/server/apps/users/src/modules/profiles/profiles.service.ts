@@ -78,4 +78,16 @@ export class ProfilesService {
         
         return new UserProfile(email, firstName, lastName, username, avatar);
     }
+
+    async getProfiles(userIds: string[]): Promise<UserProfile[]> {
+        const profiles = await this.userProfilesRepository.getProfiles(userIds);
+
+        return profiles.map((x) => new UserProfile(
+            x.email,
+            x.firstName,
+            x.lastName,
+            x.username,
+            x.avatar,
+        ));
+    }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
-import { EditProfileGQL, EditUserProfileInput, GetMyProfileGQL, GetMyProfileQuery, GetProfileGQL, GetProfileQuery } from "../../../graphql/types.generated";
+import { EditProfileGQL, EditUserProfileInput, GetMyProfileGQL, GetMyProfileQuery, GetProfileGQL, GetProfileQuery, GetProfilesGQL } from "../../../graphql/types.generated";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,7 @@ export class ProfileApi {
     private readonly getProfileGql: GetProfileGQL,
     private readonly getMyProfileGql: GetMyProfileGQL,
     private readonly editProfileGql: EditProfileGQL,
+    private readonly getProfilesGql: GetProfilesGQL,
   ) {}
 
   getProfile(userId?: string, username?: string): Observable<GetProfileQuery> {
@@ -25,6 +26,11 @@ export class ProfileApi {
 
   editProfile(profileData: EditUserProfileInput) {
     return this.editProfileGql.mutate({ editProfileData: profileData })
+      .pipe(map((data) => data.data));
+  }
+
+  getProfiles(userIds: string[]) {
+    return this.getProfilesGql.fetch({ userIds })
       .pipe(map((data) => data.data));
   }
 }
