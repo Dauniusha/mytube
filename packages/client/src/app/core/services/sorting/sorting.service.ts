@@ -17,6 +17,7 @@ export class SortingService {
   }
 
   public setFilter(query: string) {
+    console.log(query)
     this.filter.next(query);
   }
 }

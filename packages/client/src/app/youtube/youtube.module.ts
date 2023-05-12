@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ChannelComponent } from './pages/channel/channel.component';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
+import { CreateVideoComponent } from './pages/create-video/create-video.component';
 
 @NgModule({
   declarations: [

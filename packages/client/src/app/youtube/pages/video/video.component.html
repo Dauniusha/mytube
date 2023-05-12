@@ -19,7 +19,7 @@
       </ng-template>
   
       <ng-template #videoPlayer>
-        <video class="video__player" controls muted="false" controlsList="nodownload">
+        <video class="video__player" controls muted="false">
           <source [src]="this.videoStreamingApiUrl + '/' + video.id + '/play'" type="video/mp4" />
         </video>
       </ng-template>

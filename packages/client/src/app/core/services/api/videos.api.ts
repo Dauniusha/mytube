@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
-import { CreateVideoGQL, CreateVideoInput, CreateVideoMutation, DislikeGQL, GetVideoGQL, GetVideoQuery, LikeGQL } from "../../../graphql/types.generated";
+import { CreateVideoGQL, CreateVideoInput, CreateVideoMutation, DislikeGQL, GetFilteredVideosGQL, GetFilteredVideosInput, GetVideoGQL, GetVideoQuery, LikeGQL } from "../../../graphql/types.generated";
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,7 @@ export class VideosApi {
     private readonly createVideoGql: CreateVideoGQL,
     private readonly likeGql: LikeGQL,
     private readonly dislikeGql: DislikeGQL,
+    private readonly getFilteredVideosApi: GetFilteredVideosGQL,
   ) {}
 
   getVideo(videoId: string): Observable<GetVideoQuery> {
@@ -31,5 +32,10 @@ export class VideosApi {
   dislike(videoId: string) {
     return this.dislikeGql.mutate({ videoId })
       .pipe(map((res) => res.data));
+  }
+
+  getFiltered(filter: GetFilteredVideosInput) {
+    return this.getFilteredVideosApi.fetch({ videoFilterData: filter })
+      .pipe(map((data) => data.data));
   }
 }

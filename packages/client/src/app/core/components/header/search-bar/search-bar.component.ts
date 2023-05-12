@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { HttpService } from 'src/app/core/services/http/http.service';
+import { VideosService } from '../../../services/videos.service';
 
 @Component({
   selector: 'app-search-bar',
@@ -11,14 +12,13 @@ import { HttpService } from 'src/app/core/services/http/http.service';
 export class SearchBarComponent implements OnInit {
   public filterSubject: Subject<Event> = new Subject();
 
-  constructor(private httpService: HttpService) { }
+  constructor(private videosService: VideosService) { }
 
   public ngOnInit(): void {
     this.filterSubject.pipe(
       map((event: any) => (<HTMLInputElement> event.target).value), // TODO: не знаю, как пофиксить any
       debounceTime(500),
       distinctUntilChanged(),
-    )
-      .subscribe((data: string) => this.httpService.getCards(data));
+    ).subscribe((data: string) => this.videosService.setFilter({ sentance: data }));
   }
 }

@@ -4,7 +4,7 @@ import { ReplaySubject } from 'rxjs';
 import { setting } from 'src/app/settings/setting';
 import { map, switchMap, tap } from 'rxjs/operators';
 
-import { ICardData } from 'src/app/youtube/models/card-data-interface';
+import { CardData as ICardData } from 'src/app/youtube/models/card-data.interface';
 import { AppState } from 'src/app/redux/state.models';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -58,7 +58,6 @@ export class HttpService {
         const youtubeCardProto: ICardData = {
           id,
           title: customCard.inputData.title,
-          description: customCard.inputData.description,
           date: customCard.date,
           imgLink: customCard.inputData.imgLink,
         };
@@ -114,6 +113,7 @@ export class HttpService {
         viewCount: item.statistics.viewCount,
         commentCount: item.statistics.commentCount,
       },
+      imgLink: '',
       date: new Date(item.snippet.publishedAt),
     }));
   }

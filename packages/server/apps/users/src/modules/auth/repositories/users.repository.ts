@@ -8,7 +8,7 @@ export class UsersRepository {
         private readonly prismaService: PrismaService,
     ) {}
 
-    createUser(
+    createUser( 
         user: Omit<User, 'createdAt' | 'updatedAt' | 'lastSignIn' | 'onboardingStep'>,
         dbClient?: Prisma.TransactionClient,
     ) {

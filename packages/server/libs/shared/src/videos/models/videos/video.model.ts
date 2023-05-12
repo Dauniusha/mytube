@@ -33,6 +33,9 @@ export class Video {
     @Field(() => [Comment])
     comments: Comment[];
 
+    @Field(() => Int)
+    commentsAmount: number;
+
     constructor(
         id: string,
         name: string,
@@ -55,5 +58,6 @@ export class Video {
         this.createdAt = createdAt;
         this.comments = comments;
         this.description = description;
+        this.commentsAmount = comments.length;
     }
 }

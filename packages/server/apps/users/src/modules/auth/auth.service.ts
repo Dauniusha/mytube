@@ -85,6 +85,10 @@ export class AuthService {
                 message: new CreateChannelUserDto(user.email),
             });
 
+            // this.videosClient.emit(CREATE_VIDEOS_USER_TOPIC, {
+            //     message: new CreateChannelUserDto(user.email),
+            // });
+
             return user;
         });
 

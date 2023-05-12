@@ -4,6 +4,7 @@ import { VideosRepository } from "../repositories/videos.repository";
 import { S3Service } from "../infrastructure/s3.service";
 import { PrismaService } from "../../core/prisma/prisma.service";
 import { Video } from "../../../prisma/generated";
+import { VideoFilter } from "../interfaces/video-filter.interface";
 
 @Injectable()
 export class VideosService {
@@ -26,8 +27,7 @@ export class VideosService {
                 description: request.description,
                 name: request.name,
                 preview: request.preview,
-                path: '',
-            });
+            }, dbClient);
 
             return this.s3Service.createPresignUrl(video.id);
         });
@@ -65,9 +65,9 @@ export class VideosService {
             video.name,
             video.channelId,
             video.preview,
-            video.likes,
+            0,
             video.views,
-            video.dislikes,
+            0,
             video.createdAt,
             video.comments,
             video.description,
@@ -77,16 +77,29 @@ export class VideosService {
     async like(videoId: string) {
         const video = await this.getVideo(videoId);
 
-        await this.videosRepository.edit(videoId, {
-            likes: ++video.likes,
-        });
+        return;
     }
 
     async dislike(videoId: string) {
         const video = await this.getVideo(videoId);
 
-        await this.videosRepository.edit(videoId, {
-            dislikes: ++video.dislikes,
-        });
+        return;
+    }
+
+    async getFiltered(filter: VideoFilter): Promise<VideoDto[]> {
+        const videos = await this.videosRepository.getFiltered(filter);
+
+        return videos.map((x) => new VideoDto(
+            x.id,
+            x.name,
+            x.channelId,
+            x.preview,
+            0,
+            x.views,
+            0,
+            x.createdAt,
+            x.comments,
+            x.description,
+        ));
     }
 }

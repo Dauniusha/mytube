@@ -1,7 +1,7 @@
-import { CreateVideoInput, GetVideoArgs, LikeVideoArgs, PresignedUrl, Video } from "@mytube/shared/videos/models/videos";
+import { CreateVideoInput, GetVideoArgs, LikeVideoArgs, PresignedUrl, Video, GetFilteredVideosInput } from "@mytube/shared/videos/models/videos";
 import { Controller } from "@nestjs/common";
 import { MessagePattern, Payload } from "@nestjs/microservices";
-import { DISLIKE_VIDEO_TOPIC, GET_VIDEO_TOPIC, LIKE_VIDEO_TOPIC, UPLOAD_VIDEO_TOPIC } from "@mytube/shared/videos/constants";
+import { DISLIKE_VIDEO_TOPIC, GET_FILTERED_VIDEOS_TOPIC, GET_VIDEO_TOPIC, LIKE_VIDEO_TOPIC, UPLOAD_VIDEO_TOPIC } from "@mytube/shared/videos/constants";
 import { VideosService } from "./videos.service";
 
 @Controller()
@@ -28,5 +28,10 @@ export class VideosController {
     @MessagePattern(DISLIKE_VIDEO_TOPIC)
     dislike(@Payload('message') args: LikeVideoArgs) {
         return this.videosService.dislike(args.videoId);
+    }
+
+    @MessagePattern(GET_FILTERED_VIDEOS_TOPIC)
+    getFiltered(@Payload('message') args: GetFilteredVideosInput) {
+        return this.videosService.getFiltered(args);
     }
 }

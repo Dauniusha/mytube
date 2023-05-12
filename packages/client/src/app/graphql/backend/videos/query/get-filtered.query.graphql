@@ -1,0 +1,13 @@
+query getFilteredVideos($videoFilterData: GetFilteredVideosInput!) {
+    getFiltered(videoFilterData: $videoFilterData) {
+        id
+        commentsAmount
+        name
+        preview
+        likes
+        views
+        dislikes
+        createdAt
+        description
+    }
+}

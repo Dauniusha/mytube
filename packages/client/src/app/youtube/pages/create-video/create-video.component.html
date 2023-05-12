@@ -1,0 +1,48 @@
+<div class="centered-element">
+  <form class="create-video-form" (submit)="$event.preventDefault()">
+    <h2 class="title">Video</h2>
+    <p class="description">Enter video details</p>
+    <div class="preview">
+      <input type="file" accept="image/*" (change)="uploadPreview($event)"/>
+      <div *ngIf="preview; then image else placeholder"></div>
+      <ng-template #image>
+        <img [src]="preview" alt="avatar" class="preview__img">
+      </ng-template>
+      
+      <ng-template #placeholder>
+        <mat-icon matSuffix class="preview__placeholder">remove_red_eye</mat-icon>
+      </ng-template>
+    </div>
+    <mat-form-field class="create-video__field">
+      <mat-label>Name</mat-label>
+      <input matInput [formControl]="name" required/>
+      <mat-icon matSuffix class="input-icon">title</mat-icon>
+      <mat-error *ngIf="name.hasError('required')">Name is required</mat-error>
+      <mat-error *ngIf="name.hasError('maxLength')">Must be less than 60 letters</mat-error>
+    </mat-form-field>
+    <mat-form-field class="onboarding-form__field">
+      <mat-label>Description</mat-label>
+      <textarea matInput cdkTextareaAutosize [formControl]="description" maxlength="300"></textarea>
+      <mat-icon matSuffix class="input-icon">description</mat-icon>
+    </mat-form-field>
+    <mat-form-field class="onboarding-form__field">
+			<mat-label>Video file</mat-label>
+			<button mat-icon-button matPrefix (click)="videoInput.click()">
+        <mat-icon>attach_file</mat-icon>
+      </button>
+			<input type="text" readonly matInput [formControl]="videoInputName" required/>
+			<input
+        type="file"
+        hidden
+        #videoInput
+        (change)="uploadVideo(videoInput.files)"
+      />
+			<mat-error>This field is required</mat-error>
+		</mat-form-field>
+    <button
+      type="submit"
+      mat-raised-button
+      class="submit-btn" color="primary" (click)="createVideo($event)">Next</button>
+  </form>
+</div>
+  

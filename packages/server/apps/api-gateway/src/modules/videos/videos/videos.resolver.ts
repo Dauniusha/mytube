@@ -5,9 +5,8 @@ import { ClientKafka } from '@nestjs/microservices';
 import { VIDEOS_MICROCERVICE } from '@mytube/infrastructure';
 import { JwtAuthGuard } from '../../core/auth';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { DISLIKE_VIDEO_TOPIC, GET_VIDEO_TOPIC, LIKE_VIDEO_TOPIC, UPLOAD_VIDEO_TOPIC } from '@mytube/shared/videos/constants';
-import { CreateVideoInput, GetVideoArgs, Like, LikeVideoArgs, PresignedUrl, Video } from '@mytube/shared/videos/models/videos';
-import { Void } from '@mytube/shared/core/scalars/void.scalar';
+import { DISLIKE_VIDEO_TOPIC, GET_FILTERED_VIDEOS_TOPIC, GET_VIDEO_TOPIC, LIKE_VIDEO_TOPIC, UPLOAD_VIDEO_TOPIC } from '@mytube/shared/videos/constants';
+import { CreateVideoInput, GetFilteredVideosInput, GetVideoArgs, Like, LikeVideoArgs, PresignedUrl, Video } from '@mytube/shared/videos/models/videos';
 
 @Resolver(() => Video)
 @UseGuards(JwtAuthGuard)
@@ -19,6 +18,7 @@ export class VideosResolver implements OnModuleInit {
         this.videosClient.subscribeToResponseOf(GET_VIDEO_TOPIC);
         this.videosClient.subscribeToResponseOf(LIKE_VIDEO_TOPIC);
         this.videosClient.subscribeToResponseOf(DISLIKE_VIDEO_TOPIC);
+        this.videosClient.subscribeToResponseOf(GET_FILTERED_VIDEOS_TOPIC);
         await this.videosClient.connect();
     }
 
@@ -40,5 +40,10 @@ export class VideosResolver implements OnModuleInit {
     @Mutation(() => Like)
     dislike(@Args() likeVideoArgs: LikeVideoArgs) {
         return this.videosClient.send(DISLIKE_VIDEO_TOPIC, { message: likeVideoArgs });
+    }
+
+    @Query(() => [Video])
+    getFiltered(@Args('videoFilterData') videoFilterData: GetFilteredVideosInput) {
+        return this.videosClient.send(GET_FILTERED_VIDEOS_TOPIC, { message: videoFilterData });
     }
 }

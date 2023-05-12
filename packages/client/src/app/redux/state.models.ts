@@ -1,4 +1,4 @@
-import { ICardData } from 'src/app/youtube/models/card-data-interface';
+import { CardData as ICardData } from 'src/app/youtube/models/card-data.interface';
 import { ICustomCardData } from 'src/app/core/models/custom-card/custom-card-data';
 
 export interface CardsState {

@@ -51,6 +51,7 @@ export class CreateProfileComponent {
 
   async uploadAvatar(event: any) {
     const file: File = event.target.files[0];
+    console.log(file)
 
     const base64 = await convertBase64(file);
 

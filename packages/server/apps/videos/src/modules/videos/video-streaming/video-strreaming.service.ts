@@ -1,7 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { Response } from 'express';
 import { S3Service } from "../infrastructure/s3.service";
-import { Readable } from "stream";
 import { VideosRepository } from "../repositories/videos.repository";
 
 @Injectable()

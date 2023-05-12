@@ -11,14 +11,10 @@
     <app-loaders></app-loaders>
   </ng-template>
 
-  <ng-template #loaded>
-    <app-custom-mini-card
-      *ngFor="let card of customCards | async"
-      [cardData]="card"
-    ></app-custom-mini-card>
-    
+  <ng-template #loaded>    
     <app-mini-card
-      *ngFor="let card of cards | async | sorting: sortData?.active : sortData?.direction | filterByWord: sortingByWordQuery"
+      *ngFor="let card of videoCards
+        | sorting: sortData?.active : sortData?.direction | filterByWord: sortingByWordQuery"
       [cardData]="card"
     ></app-mini-card>
   </ng-template>

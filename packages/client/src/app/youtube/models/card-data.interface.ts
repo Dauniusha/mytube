@@ -1,10 +1,9 @@
 import { ICardStatistics } from './card-statistics-interface';
 
-export interface ICardData {
+export interface CardData {
   id: string;
   title: string;
-  description: string;
   date: Date;
   statistics?: ICardStatistics;
-  imgLink?: string;
+  imgLink: string;
 }

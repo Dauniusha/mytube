@@ -8,7 +8,9 @@ import { SortingBarService } from 'src/app/core/services/sorting/sorting-bar.ser
 import { SortingService } from 'src/app/core/services/sorting/sorting.service';
 import { selectorCards } from 'src/app/redux/selectors/cards.selectors';
 import { AppState } from 'src/app/redux/state.models';
-import { ICardData } from '../../models/card-data-interface';
+import { VideosApi } from '../../../core/services/api/videos.api';
+import { VideosService } from '../../../core/services/videos.service';
+import { CardData } from '../../models/card-data.interface';
 
 @Component({
   selector: 'app-main',
@@ -16,23 +18,37 @@ import { ICardData } from '../../models/card-data-interface';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
-  public sortingByWordQuery: string = '';
+  sortingByWordQuery: string = '';
 
-  public sortData?: Sort;
+  sortData?: Sort;
 
-  public customCards: Observable<ICustomCardData[]> = this.store.select(selectorCards.custom);
+  customCards: Observable<ICustomCardData[]> = this.store.select(selectorCards.custom);
 
-  public cards: Observable<ICardData[]> = this.store.select(selectorCards.youtube);
+  videoCards: CardData[] = [];
 
   constructor(
     public loadingService: LoadingService,
     private sortingService: SortingService,
     private store: Store<AppState>,
     public sortingBarService: SortingBarService,
+    private videosService: VideosService,
   ) { }
 
   public ngOnInit(): void {
-    this.sortingService.sorting.subscribe((sortData) => this.sortData = sortData);
-    this.sortingService.filter.subscribe((query) => this.sortingByWordQuery = query);
+    this.videosService.filteredVideos$.subscribe(({ getFiltered: videos }) => {
+      this.videoCards = videos.map((x) => ({
+        date: new Date(x.createdAt),
+        description: x.description ?? '',
+        id: x.id,
+        title: x.name,
+        imgLink: x.preview,
+        statistics: {
+          commentCount: x.commentsAmount.toString(),
+          dislikeCount: x.dislikes.toString(),
+          likeCount: x.likes.toString(),
+          viewCount: x.views.toString(),
+        },
+      }));
+    });
   }
 }

@@ -9,45 +9,68 @@ datasource Videos {
 }
 
 model Channel {
-  channelId String @id() @map("channel_id") @Videos.Uuid
-  videos Video[]
+  channelId String  @id() @map("channel_id") @Videos.Uuid
+  videos    Video[]
 
   @@map("channels")
 }
 
 model User {
-  userId       String         @id() @map("user_id")
+  userId   String     @id() @map("user_id")
   comments Comment[]
+  Dislikes Dislikes[]
+  Likes    Likes[]
 
   @@map("users")
 }
 
 model Video {
-  id String @id() @default(uuid()) @Videos.Uuid
-  name String @unique() @Videos.VarChar(60)
-  path String @unique() @Videos.VarChar(2000)
-  channelId String @map("channel_id") @Videos.Uuid
-  description String? @Videos.VarChar(300)
-  preview String @Videos.Text
-  createdAt DateTime @default(now()) @map("created_at")
-  likes Int @default(0)
-  views Int @default(0)
-  dislikes Int @default(0)
-  channel Channel @relation(fields: [channelId], references: [channelId], onDelete: Cascade)
-  comments Comment[]
+  id          String     @id() @default(uuid()) @Videos.Uuid
+  name        String     @unique() @Videos.VarChar(60)
+  channelId   String     @map("channel_id") @Videos.Uuid
+  description String?    @Videos.VarChar(300)
+  preview     String     @Videos.Text
+  createdAt   DateTime   @default(now()) @map("created_at")
+  views       Int        @default(0)
+  channel     Channel    @relation(fields: [channelId], references: [channelId], onDelete: Cascade)
+  comments    Comment[]
+  Dislikes    Dislikes[]
+  Likes       Likes[]
 
   @@index([name])
   @@map("videos")
 }
 
-model Comment {
-  id String @id() @default(uuid()) @Videos.Uuid
-  videoId String @map("video_id") @Videos.Uuid
-  userId String @map("user_id") @Videos.VarChar(255)
-  content String @Videos.VarChar(500)
+model Dislikes {
+  userId    String   @map("user_id")
+  videoId   String   @map("video_id") @Videos.Uuid
   createdAt DateTime @default(now()) @map("created_at")
-  video Video @relation(fields: [videoId], references: [id], onDelete: Cascade)
-  user User @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  video     Video    @relation(fields: [videoId], references: [id], onDelete: Cascade)
+
+  @@id([userId, videoId])
+  @@map("dislikes")
+}
+
+model Likes {
+  userId    String   @map("user_id")
+  videoId   String   @map("video_id") @Videos.Uuid
+  createdAt DateTime @default(now()) @map("created_at")
+  user      User     @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  video     Video    @relation(fields: [videoId], references: [id], onDelete: Cascade)
+
+  @@id([userId, videoId])
+  @@map("likes")
+}
+
+model Comment {
+  id        String   @id() @default(uuid()) @Videos.Uuid
+  videoId   String   @map("video_id") @Videos.Uuid
+  userId    String   @map("user_id") @Videos.VarChar(255)
+  content   String   @Videos.VarChar(500)
+  createdAt DateTime @default(now()) @map("created_at")
+  video     Video    @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [userId], onDelete: Cascade)
 
   @@index([createdAt(sort: Desc)])
   @@map("comments")

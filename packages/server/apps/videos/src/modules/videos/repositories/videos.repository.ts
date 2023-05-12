@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { Prisma, Video } from "../../../prisma/generated";
 import { PrismaService } from "../../core/prisma/prisma.service";
+import { VideoFilter } from "../interfaces/video-filter.interface";
 
 @Injectable()
 export class VideosRepository {
@@ -71,7 +72,26 @@ export class VideosRepository {
         });
     }
 
-    getFiltered() {
-
+    getFiltered(filter: VideoFilter) {
+        return this.prismaService.client.video.findMany({
+            where: {
+                OR: [{
+                    name: {
+                        contains: filter.sentance ?? '',
+                    },
+                }, {
+                    description: {
+                        contains: filter.sentance ?? '',
+                    },
+                }],
+            },
+            orderBy: {
+                views: filter.sortings.views,
+                createdAt: filter.sortings.uploadedDate,
+            },
+            include: {
+                comments: true,
+            },
+        });
     }
 }

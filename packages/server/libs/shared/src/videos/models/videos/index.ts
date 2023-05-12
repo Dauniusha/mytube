@@ -1,3 +1,4 @@
+export * from './dto/get-filtered-videos.args';
 export * from './dto/get-chunk-request.dto';
 export * from './dto/create-comment.input';
 export * from './dto/create-video.input';

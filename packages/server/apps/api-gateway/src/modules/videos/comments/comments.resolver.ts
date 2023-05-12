@@ -14,7 +14,7 @@ export class CommentsResolver implements OnModuleInit {
     constructor(@Inject(VIDEOS_MICROCERVICE) private readonly videosClient: ClientKafka) {}
 
     async onModuleInit() {
-        this.videosClient.subscribeToResponseOf(ADD_COMMENT_TOPIC);
+    this.videosClient.subscribeToResponseOf(ADD_COMMENT_TOPIC);
         await this.videosClient.connect();
     }
 

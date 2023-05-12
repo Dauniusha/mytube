@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ICardData } from '../models/card-data-interface';
+import { CardData as ICardData } from '../models/card-data.interface';
 
 type SortType = 'asc' | 'desc' | '';
 

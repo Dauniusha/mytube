@@ -30,6 +30,7 @@ export class AuthenticationService {
   clientSignIn(authResult: AuthResult) {
     const { accessToken, refreshToken, onboardingStep } = authResult;
 
+    console.log(authResult)
     localStorage.setItem(setting.stringConstants.storeNames.token, accessToken);
     localStorage.setItem(setting.stringConstants.storeNames.refreshToken, refreshToken);
     localStorage.setItem(setting.stringConstants.storeNames.onboardingStep, onboardingStep.toString());
@@ -84,7 +85,7 @@ export class AuthenticationService {
   }
 
   nextOnboardingStep() {
-    const nextStep = Number(setting.stringConstants.storeNames.onboardingStep) + 1;
+    const nextStep = Number(localStorage.getItem(setting.stringConstants.storeNames.onboardingStep)) + 1;
     localStorage.setItem(setting.stringConstants.storeNames.onboardingStep, nextStep.toString());
   }
 }

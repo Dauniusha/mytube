@@ -21,11 +21,11 @@ export class S3Service {
         });
 
         this.videoBucket = configService.get('S3_VIDEO_BUCKET');
-        this.expiration = configService.get('S3_PRESIGN_URL_EXPIRATION');
+        this.expiration = Number(configService.get('S3_PRESIGN_URL_EXPIRATION'));
     }
 
     createPresignUrl(key: string): Promise<string> {
-        return this.minioClient.presignedPutObject(this.videoBucket, key, this.expiration);
+        return this.minioClient.presignedPutObject(this.videoBucket, key + '.mp4', this.expiration);
     }
 
     getVideo(key: string, startByte: number, length: number): Promise<Readable> {
