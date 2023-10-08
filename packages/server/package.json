@@ -17,7 +17,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./apps/mytube-server/test/jest-e2e.json"
+    "test:e2e": "jest --config ./apps/mytube-server/test/jest-e2e.json",
+    "prisma:generate": "prisma generate --schema=apps/videos/src/prisma/schema.prisma & prisma generate --schema=apps/users/src/prisma/schema.prisma & prisma generate --schema=apps/channels/src/prisma/schema.prisma" 
   },
   "dependencies": {
     "@mytube/server": "file:",
@@ -54,7 +55,6 @@
     "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.17",
     "@types/jest": "29.2.4",
-    "@types/minio": "^7.0.18",
     "@types/node": "18.11.18",
     "@types/passport-jwt": "^3.0.8",
     "@types/passport-local": "^1.0.35",

@@ -1,6 +1,7 @@
 {
   "name": "mytube",
   "version": "1.0.0",
+  "private": true,
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,7 +17,7 @@
   },
   "homepage": "https://github.com/Dauniusha/mytube#readme",
   "workspaces": [
-    "packages\\client",
-    "packages\\server"
+    "packages/client",
+    "packages/server"
   ]
 }
